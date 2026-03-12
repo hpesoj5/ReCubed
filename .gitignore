@@ -1,0 +1,6 @@
+# temporaries
+.cache
+
+# dev build
+build/
+compile_commands.json

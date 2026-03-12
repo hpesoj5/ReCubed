@@ -1,1 +1,1 @@
-TwoCubed created in Python
+TwoCubed created two years later, with hopefully better code.
