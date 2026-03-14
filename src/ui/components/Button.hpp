@@ -11,8 +11,8 @@ namespace UI::Components
     class Button
     {
     public:
-        Button(std::string_view label="", const sf::Font& font=Globals::DEFAULT_FONT);
-        Button(const Vector2f& size, const Vector2f& pos, std::string_view label="", const sf::Font& font=Globals::DEFAULT_FONT);
+        Button(std::string_view label="", const sf::Font& font=Globals::Text::DEFAULT_FONT);
+        Button(const Vector2f& size, const Vector2f& pos, std::string_view label="", const sf::Font& font=Globals::Text::DEFAULT_FONT);
 
         // taken from sf::ReactangleShape, likely won't change
         inline const Vector2f& getSize() { return m_rect.getSize(); }

@@ -12,7 +12,7 @@ void Game::start()
                 m_window.close();
         }
 
-        m_window.clear(Globals::DEFAULT_BG_COLOR);
+        m_window.clear(Globals::Window::BG_COLOR);
 
         m_window.display();
     }

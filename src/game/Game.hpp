@@ -26,7 +26,9 @@ private:
     ReversePlayer r_player;
 
     Game()
-        : m_window { sf::RenderWindow(sf::VideoMode({ Globals::WINDOW_WIDTH, Globals::WINDOW_HEIGHT }), "ReCubed", sf::Style::Close) }
+        : m_window { sf::RenderWindow(sf::VideoMode({ Globals::Window::WIDTH, Globals::Window::HEIGHT }), "ReCubed", sf::Style::Close) }
+        , m_player { Player{} }
+        , r_player { ReversePlayer{} }
     {
         m_window.setVerticalSyncEnabled(true);
     }

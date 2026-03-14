@@ -10,8 +10,16 @@ endif()
 
 find_package(SFML 2.6 COMPONENTS graphics window audio system REQUIRED)
 
-file(GLOB_RECURSE SOURCES src/*.cpp)
-add_executable(ReCubed ${SOURCES})
+add_executable(ReCubed
+    src/main.cpp
+    src/Globals.cpp
+
+    src/entities/Player.cpp
+
+    src/game/Game.cpp
+
+    src/ui/components/Button.cpp
+)
 target_link_libraries(ReCubed sfml-graphics sfml-window sfml-audio sfml-system)
 target_compile_options(ReCubed PRIVATE -Wall -Wextra -Wpedantic)
 target_include_directories(ReCubed PRIVATE src/)
