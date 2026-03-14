@@ -1,13 +1,19 @@
+#include "Globals.hpp"
+#include "game/Game.hpp"
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Maze Game");
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event))
-            if (event.type == sf::Event::Closed)
-                window.close();
-        window.clear(sf::Color::Black);
-        window.display();
-    }
+    // load default font
+    // if (!Globals::DEFAULT_FONT.loadFromFile("OpenSans.ttf"))
+    // {
+    //     std::cerr << "Couldn't load font\n";
+    //     return EXIT_FAILURE;
+    // }
+
+    Game& game { Game::getGame() };
+    game.start();
+
+    return EXIT_SUCCESS;
 }

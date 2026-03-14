@@ -1,9 +1,10 @@
 CompileFlags:
   CompilationDatabase: build/
+  Add: [-I/home/hpesoj/Projects/ReCubed/src]
 
 Diagnostics:
   UnusedIncludes: Strict
-  MissingIncludes: Strict
+  MissingIncludes: None
 
 InlayHints:
   Enabled: true
