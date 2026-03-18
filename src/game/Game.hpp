@@ -3,6 +3,7 @@
 #include "Globals.hpp"
 #include "grid/Grid.hpp"
 #include "entities/Player.hpp"
+#include "input/InputHandler.hpp"
 // #include "UI.hpp"
 #include <SFML/Graphics.hpp>
 
@@ -15,21 +16,18 @@ public:
     Game(Game&& other) = delete;
     Game& operator=(const Game& other) = delete;
     Game& operator=(Game&& other) = delete;
+    ~Game();
 
+    void draw();
     void start();
 
 private:
     sf::RenderWindow m_window;
+    Input::InputHandler m_inputHandler;
 
     Grid m_grid;
     Player m_player;
     ReversePlayer r_player;
 
-    Game()
-        : m_window { sf::RenderWindow(sf::VideoMode({ Globals::Window::WIDTH, Globals::Window::HEIGHT }), "ReCubed", sf::Style::Close) }
-        , m_player { Player{} }
-        , r_player { ReversePlayer{} }
-    {
-        m_window.setVerticalSyncEnabled(true);
-    }
+    Game();
 };

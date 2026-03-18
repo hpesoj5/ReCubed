@@ -17,8 +17,16 @@ namespace UI::Components
         m_rect.setOrigin(size / 2.f);
         m_rect.setPosition(pos);
 
-        centerText(m_label);
+        centerLabel();
         m_label.setPosition(pos);
+    }
+
+    void Button::centerLabel()
+    {
+        auto textCenter { m_label.getGlobalBounds().getSize() / 2.f };
+        auto localBounds { textCenter + m_label.getLocalBounds().getPosition() };
+        auto rounded { round(localBounds) };
+        m_label.setOrigin(rounded);
     }
 
     void Button::draw()

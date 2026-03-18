@@ -18,6 +18,8 @@ add_executable(ReCubed
 
     src/game/Game.cpp
 
+    src/input/InputHandler.cpp
+
     src/ui/components/Button.cpp
 )
 target_link_libraries(ReCubed sfml-graphics sfml-window sfml-audio sfml-system)

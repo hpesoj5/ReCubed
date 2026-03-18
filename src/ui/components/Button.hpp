@@ -34,6 +34,7 @@ namespace UI::Components
         inline void setPosition(float x, float y) { m_rect.setPosition(x, y); }
         inline void setPosition(const Vector2f& pos) { m_rect.setPosition(pos); }
 
+        void centerLabel();
         void draw();
 
     private:
