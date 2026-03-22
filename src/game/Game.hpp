@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Globals.hpp"
 #include "grid/Grid.hpp"
 #include "entities/Player.hpp"
 #include "input/InputHandler.hpp"
@@ -25,7 +24,7 @@ private:
     sf::RenderWindow m_window;
     Input::InputHandler m_inputHandler;
 
-    Grid m_grid;
+    Grid::Grid m_grid;
     Player m_player;
     ReversePlayer r_player;
 

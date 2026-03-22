@@ -7,16 +7,18 @@
 using sf::Vector2f;
 using sf::Vector2i;
 
-PlayerBase::PlayerBase(const Vector2f& pos)
-    : m_sprite{ sf::RectangleShape{ Vector2f(Globals::Player::SIZE, Globals::Player::SIZE) } }
+PlayerBase::PlayerBase(Grid::Grid& grid)
+    : m_grid { grid }
+    , m_sprite{ sf::RectangleShape{ Vector2f(Globals::Player::SIZE, Globals::Player::SIZE) } }
+    , m_pos{ 0, 0 }
 {
     m_sprite.setOrigin(m_sprite.getSize() / 2.f);
-    m_sprite.setPosition(pos);
+    setPosition(m_pos);
 }
 
 bool PlayerBase::outOfBounds() const
 {
-    return ::outOfBounds(getPosition());
+    return !m_grid.inBounds(m_pos);
 }
 
 void PlayerBase::move(Globals::Direction dir)
@@ -34,24 +36,27 @@ void PlayerBase::move(Globals::Direction dir)
     }
 
     Vector2i newPos { currPos + applyDirection(delta) };
-    if (!::outOfBounds(newPos))
+    if (m_grid.inBounds(newPos))
+    {
+        m_pos = newPos;
         setPosition(newPos);
+    }
 
     // future: check for collision with other player and all obstacles
 }
 
 
 
-Player::Player(const Vector2f& pos)
-    : PlayerBase{ pos }
+Player::Player(Grid::Grid& grid)
+    : PlayerBase{ grid }
 {
     m_sprite.setFillColor(Globals::Player::COLOR);
 }
 
 
 
-ReversePlayer::ReversePlayer(const Vector2f& pos)
-    : PlayerBase{ pos }
+ReversePlayer::ReversePlayer(Grid::Grid& grid)
+    : PlayerBase{ grid }
 {
     m_sprite.setFillColor(Globals::Player::REVERSE_COLOR);
 }

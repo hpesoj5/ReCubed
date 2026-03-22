@@ -18,6 +18,8 @@ add_executable(ReCubed
 
     src/game/Game.cpp
 
+    src/grid/Grid.cpp
+
     src/input/InputHandler.cpp
 
     src/ui/components/Button.cpp
