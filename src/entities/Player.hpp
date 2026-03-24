@@ -16,8 +16,10 @@ public:
     virtual ~PlayerBase() = default;
 
     Vector2i getPosition() const { return m_pos; }
-    bool outOfBounds() const;
+    bool outOfBounds() const { return !m_grid.inBounds(m_pos); }
+    bool isAtGoal() const { return m_atGoal; }
     void onDirectionInput(Globals::Direction dir) override { move(dir); }
+    void resetGoal() { m_atGoal = false; }
     void move(Globals::Direction dir); // calls virtual member function applyDirection
     void setPosition(int x, int y) { m_pos = Vector2i(x, y); m_sprite.setPosition(m_grid.coordsToVector2f(x, y)); }
     void setPosition(const Vector2i& pos) { m_pos = pos; m_sprite.setPosition(m_grid.coordsToVector2f(pos)); }
@@ -27,9 +29,15 @@ protected:
     Grid::Grid& m_grid;
     sf::RectangleShape m_sprite;
     Vector2i m_pos;
+    Grid::Tile::Tile m_goalTile;
 
     virtual Vector2i applyDirection(const Vector2i& delta) const = 0;
+
+private:
+    bool m_atGoal;
 };
+
+
 
 class Player: public PlayerBase
 {
@@ -39,6 +47,8 @@ public:
 protected:
     Vector2i applyDirection(const Vector2i& delta) const override { return delta; }
 };
+
+
 
 class ReversePlayer: public PlayerBase
 {

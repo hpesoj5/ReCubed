@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <cmath>
 
 namespace Globals
 {
@@ -11,8 +12,23 @@ namespace Globals
         Down,
         Left,
         Right,
-        NUM_DIRECTIONS,
     };
+
+    namespace Colors
+    {
+        inline const sf::Color BG { 255, 255, 255 };
+        inline const sf::Color FG { 0, 0, 0 };
+        inline const sf::Color GRID_LINE { 0, 0, 0, 63 };
+
+
+        inline const sf::Color WALL { 0, 0, 0 };
+        inline const sf::Color EMPTY { sf::Color::Transparent };
+        inline const sf::Color PLAYER { 0, 0, 255 };
+        inline const sf::Color RPLAYER { 255, 0, 0 };
+        inline const sf::Color PLAYER_OUTLINE { 0, 0, 0 };
+        inline const sf::Color GOAL { 0, 0, 255, 63 };
+        inline const sf::Color RGOAL { 255, 0, 0, 63 };
+    }
 
     namespace Game
     {
@@ -20,17 +36,15 @@ namespace Globals
         inline constexpr int SIZE_MULTIPLIER { 4 };
         inline constexpr float GRID_CELL_SIZE { TILE_SIZE * SIZE_MULTIPLIER };
 
-        inline const sf::Color GRID_LINE_COLOR(0, 0, 0, 63);
+        inline constexpr int NUM_LEVELS { 2 };
+
+        inline int nextLevel(int level) { return (level % NUM_LEVELS) + 1; }
     }
 
     namespace Player
     {
         inline constexpr float SIZE_MULTIPLIER { 0.75 };
         inline constexpr float SIZE { Game::TILE_SIZE * Game::SIZE_MULTIPLIER * SIZE_MULTIPLIER };
-        inline const sf::Color COLOR(0, 0, 255);
-        inline const sf::Color REVERSE_COLOR(255, 0, 0);
-        inline const sf::Color GOAL_COLOR(0, 0, 255, 63);
-        inline const sf::Color REVERSE_GOAL_COLOR(255, 0, 0, 63);
     }
 
     namespace Text
@@ -44,12 +58,8 @@ namespace Globals
         inline constexpr int WIDTH { 320 };
         inline constexpr int HEIGHT { 320 };
 
-
-        inline const sf::Color BG_COLOR(255, 255, 255);
-        inline const sf::Color FG_COLOR(0, 0, 0);
+        void centerText(sf::Text& text);
     }
 }
 
 sf::Vector2f round(const sf::Vector2f& vector);
-
-// void centerText(sf::Text& text);

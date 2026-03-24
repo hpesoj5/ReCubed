@@ -1,6 +1,6 @@
 #pragma once
 
-#include "States.hpp"
+#include "states/IGameState.hpp"
 #include "input/InputHandler.hpp"
 #include <SFML/Graphics.hpp>
 #include <memory>

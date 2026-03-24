@@ -1,3 +1,5 @@
+#pragma once
+
 #include "states/IGameState.hpp"
 #include "states/LevelCompleteState.hpp"
 #include "states/LevelSelectState.hpp"

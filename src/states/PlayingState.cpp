@@ -1,18 +1,28 @@
 #include "PlayingState.hpp"
 #include "input/InputHandler.hpp"
+#include "levels/LevelBuilder.hpp"
+#include "levels/LevelParser.hpp"
 #include <SFML/Graphics.hpp>
 
-PlayingState::PlayingState(int level)
-    : m_grid { Grid::Grid(9, 9) } // in the future, size will depend on the level
+using sf::Vector2f;
+using sf::Vector2i;
+
+PlayingState::PlayingState(int level, TransitionCallback onTransition)
+    : m_grid { Grid::Grid{} } // in the future, size will depend on the level
+    , m_level { level }
     , m_player { Player{ m_grid } }
     , r_player { ReversePlayer{ m_grid } }
+    , m_onTransition { onTransition }
 {
-    m_player.setPosition(0, 0);
-    r_player.setPosition(m_grid.getWidth() - 1, m_grid.getHeight() - 1);
+    std::string path { "src/levels/level_" + std::to_string(level) + ".level" };
+    Levels::LevelData data { Levels::LevelParser::parse(path) };
 
-    m_grid.setWall(3, 6);
-    m_grid.setGoal(4, 5);
-    m_grid.setRGoal(2, 8);
+    m_grid = Grid::Grid(data.width, data.height, data.tiles);
+    m_player.resetGoal();
+    r_player.resetGoal();
+    m_player.setPosition(data.playerStart);
+    r_player.setPosition(data.rPlayerStart);
+
 }
 
 void PlayingState::onEnter(Input::InputHandler& input)
@@ -29,7 +39,8 @@ void PlayingState::onExit(Input::InputHandler& input)
 
 void PlayingState::update(float dt)
 {
-
+    if (m_player.isAtGoal() && r_player.isAtGoal())
+        m_onTransition(std::make_unique<PlayingState>(Globals::Game::nextLevel(m_level), m_onTransition));
 }
 
 void PlayingState::draw(sf::RenderWindow& window)
@@ -40,7 +51,9 @@ void PlayingState::draw(sf::RenderWindow& window)
         sf::RectangleShape combinedPlayer(Vector2f(Globals::Player::SIZE, Globals::Player::SIZE));
         combinedPlayer.setOrigin(combinedPlayer.getSize() / 2.f);
         combinedPlayer.setPosition(m_grid.coordsToVector2f(m_player.getPosition()));
-        combinedPlayer.setFillColor(Globals::Player::COLOR + Globals::Player::REVERSE_COLOR);
+        combinedPlayer.setFillColor(Globals::Colors::PLAYER + Globals::Colors::RPLAYER);
+        combinedPlayer.setOutlineThickness(-2.f);
+        combinedPlayer.setOutlineColor(Globals::Colors::PLAYER_OUTLINE);
 
         window.draw(combinedPlayer);
      }

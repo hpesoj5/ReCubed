@@ -14,10 +14,10 @@ namespace Grid
         {
             Empty,
             Wall,
+            Start,
+            RStart,
             Goal,
             RGoal,
-
-            NUM_TILES,
         };
         inline bool isWall(Tile tile) { return tile == Tile::Wall; }
         void setTileColor(sf::RectangleShape& sprite, Tile tile);
@@ -27,16 +27,17 @@ namespace Grid
     class Grid
     {
     public:
-        Grid(int width, int height);
+        Grid() = default;
+        Grid(int width, int height, const std::vector<std::vector<Tile::Tile>>& tiles);
         void draw(sf::RenderWindow& window);
-        void setEmpty(int x, int y) { m_tiles.at(x).at(y) = Tile::Tile::Empty; } // temporary
-        void setWall(int x, int y) { m_tiles.at(x).at(y) = Tile::Tile::Wall; } // temporary
-        void setGoal(int x, int y) { m_tiles.at(x).at(y) = Tile::Tile::Goal; }
-        void setRGoal(int x, int y) { m_tiles.at(x).at(y) = Tile::Tile::RGoal; }
+        void setTile(int x, int y, Tile::Tile tile) { m_tiles.at(x).at(y) = tile; }
+        void setTile(const Vector2i& pos, Tile::Tile tile) { setTile(pos.x, pos.y, tile); }
 
         int getWidth() const { return m_width; }
         int getHeight() const { return m_height; }
 
+        bool isTile(int x, int y, Tile::Tile tile) const { return m_tiles.at(x).at(y) == tile; }
+        bool isTile(const Vector2i& pos, Tile::Tile tile) const { return isTile(pos.x, pos.y, tile); }
         bool isWall(int x, int y) const { return Tile::isWall(m_tiles.at(x).at(y)); }
         bool isWall(const Vector2i& pos) const { return isWall(pos.x, pos.y); }
         bool inBounds(int x, int y) const { return (x >= 0 && x < m_width && y >= 0 && y < m_height); }

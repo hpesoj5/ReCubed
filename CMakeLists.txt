@@ -22,6 +22,9 @@ add_executable(ReCubed
 
     src/input/InputHandler.cpp
 
+    src/levels/LevelBuilder.cpp
+    src/levels/LevelParser.cpp
+
     # src/states/LevelCompleteState.cpp
     # src/states/LevelSelectState.cpp
     # src/states/MainMenuState.cpp

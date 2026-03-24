@@ -3,6 +3,8 @@
 #include <string>
 #include <string_view>
 
+using sf::Vector2f;
+
 namespace UI::Components
 {
     Button::Button(std::string_view label, const sf::Font& font)

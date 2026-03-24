@@ -2,7 +2,6 @@
 #include "Player.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Vector2.hpp>
-#include <stdexcept>
 
 using sf::Vector2f;
 using sf::Vector2i;
@@ -14,11 +13,9 @@ PlayerBase::PlayerBase(Grid::Grid& grid)
 {
     m_sprite.setOrigin(m_sprite.getSize() / 2.f);
     setPosition(m_pos);
-}
 
-bool PlayerBase::outOfBounds() const
-{
-    return !m_grid.inBounds(m_pos);
+    m_sprite.setOutlineThickness(-2.f);
+    m_sprite.setOutlineColor(Globals::Colors::PLAYER_OUTLINE);
 }
 
 void PlayerBase::move(Globals::Direction dir)
@@ -32,7 +29,6 @@ void PlayerBase::move(Globals::Direction dir)
     case Globals::Direction::Down:  delta = {  0,  1 }; break;
     case Globals::Direction::Left:  delta = { -1,  0 }; break;
     case Globals::Direction::Right: delta = {  1,  0 }; break;
-    default: throw std::invalid_argument("Invalid Direction");
     }
 
     Vector2i newPos { currPos + applyDirection(delta) };
@@ -42,7 +38,12 @@ void PlayerBase::move(Globals::Direction dir)
         setPosition(newPos);
     }
 
-    // future: check for collision with other player and all obstacles
+    if (m_grid.isTile(m_pos, m_goalTile))
+        m_atGoal = true;
+    else
+        m_atGoal = false;
+
+    // future: check for collision with other entities excluding other player
 }
 
 
@@ -50,7 +51,8 @@ void PlayerBase::move(Globals::Direction dir)
 Player::Player(Grid::Grid& grid)
     : PlayerBase{ grid }
 {
-    m_sprite.setFillColor(Globals::Player::COLOR);
+    m_sprite.setFillColor(Globals::Colors::PLAYER);
+    m_goalTile = Grid::Tile::Tile::Goal;
 }
 
 
@@ -58,5 +60,6 @@ Player::Player(Grid::Grid& grid)
 ReversePlayer::ReversePlayer(Grid::Grid& grid)
     : PlayerBase{ grid }
 {
-    m_sprite.setFillColor(Globals::Player::REVERSE_COLOR);
+    m_sprite.setFillColor(Globals::Colors::RPLAYER);
+    m_goalTile = Grid::Tile::Tile::RGoal;
 }

@@ -34,17 +34,17 @@ void InputHandler::handleEvents(sf::RenderWindow& window)
             switch (event.key.scancode)
             {
                 case sf::Keyboard::Scan::Up:    notifyDirection(Globals::Direction::Up);    break;
-                case sf::Keyboard::Scan::W:    notifyDirection(Globals::Direction::Up);    break;
-                case sf::Keyboard::Scan::K:    notifyDirection(Globals::Direction::Up);    break;
+                case sf::Keyboard::Scan::W:     notifyDirection(Globals::Direction::Up);    break;
+                case sf::Keyboard::Scan::K:     notifyDirection(Globals::Direction::Up);    break;
                 case sf::Keyboard::Scan::Down:  notifyDirection(Globals::Direction::Down);  break;
-                case sf::Keyboard::Scan::S:  notifyDirection(Globals::Direction::Down);  break;
-                case sf::Keyboard::Scan::J:  notifyDirection(Globals::Direction::Down);  break;
+                case sf::Keyboard::Scan::S:     notifyDirection(Globals::Direction::Down);  break;
+                case sf::Keyboard::Scan::J:     notifyDirection(Globals::Direction::Down);  break;
                 case sf::Keyboard::Scan::Left:  notifyDirection(Globals::Direction::Left);  break;
-                case sf::Keyboard::Scan::A:  notifyDirection(Globals::Direction::Left);  break;
-                case sf::Keyboard::Scan::H:  notifyDirection(Globals::Direction::Left);  break;
+                case sf::Keyboard::Scan::A:     notifyDirection(Globals::Direction::Left);  break;
+                case sf::Keyboard::Scan::H:     notifyDirection(Globals::Direction::Left);  break;
                 case sf::Keyboard::Scan::Right: notifyDirection(Globals::Direction::Right); break;
-                case sf::Keyboard::Scan::D: notifyDirection(Globals::Direction::Right); break;
-                case sf::Keyboard::Scan::L: notifyDirection(Globals::Direction::Right); break;
+                case sf::Keyboard::Scan::D:     notifyDirection(Globals::Direction::Right); break;
+                case sf::Keyboard::Scan::L:     notifyDirection(Globals::Direction::Right); break;
                 default: break;
             }
         }

@@ -1,7 +1,6 @@
 #include "Globals.hpp"
 #include "Game.hpp"
-#include "states/PlayingState.hpp"
-#include <SFML/System/Vector2.hpp>
+#include "States.hpp"
 
 Game::Game()
     : m_window { sf::RenderWindow(sf::VideoMode({ Globals::Window::WIDTH, Globals::Window::HEIGHT }), "ReCubed", sf::Style::Close) }
@@ -23,7 +22,7 @@ void Game::setState(std::unique_ptr<IGameState> state)
 
 void Game::start()
 {
-    setState(std::make_unique<PlayingState>(1));
+    setState(std::make_unique<PlayingState>(1, [this](auto next) { setState(std::move(next)); } ));
     sf::Clock clock;
     while (m_window.isOpen())
     {
@@ -31,7 +30,7 @@ void Game::start()
         m_inputHandler.handleEvents(m_window);
         update(dt);
 
-        m_window.clear(Globals::Window::BG_COLOR);
+        m_window.clear(Globals::Colors::BG);
         draw();
         m_window.display();
     }
