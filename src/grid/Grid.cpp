@@ -7,17 +7,24 @@ void Grid::Tile::setTileColor(sf::RectangleShape& sprite, Tile tile)
     {
     case Tile::Empty:
         sprite.setFillColor(Globals::Window::BG_COLOR);
-        sprite.setOutlineColor(sf::Color(0, 0, 0, 63));
+        sprite.setOutlineColor(Globals::Game::GRID_LINE_COLOR);
         sprite.setOutlineThickness(-1.f);
         break;
 
     case Tile::Wall:
+        sprite.setFillColor(sf::Color::Black);
         break;
 
     case Tile::Goal:
+        sprite.setFillColor(Globals::Player::GOAL_COLOR);
+        sprite.setOutlineColor(Globals::Game::GRID_LINE_COLOR);
+        sprite.setOutlineThickness(-1.f);
         break;
 
     case Tile::RGoal:
+        sprite.setFillColor(Globals::Player::REVERSE_GOAL_COLOR);
+        sprite.setOutlineColor(Globals::Game::GRID_LINE_COLOR);
+        sprite.setOutlineThickness(-1.f);
         break;
 
     default: break;
@@ -27,7 +34,7 @@ void Grid::Tile::setTileColor(sf::RectangleShape& sprite, Tile tile)
 Grid::Grid::Grid(int width, int height)
     : m_width { width }
     , m_height { height }
-    , m_sprite { sf::RectangleShape(sf::Vector2f(width * Globals::Game::GRID_CELL_SIZE, height * Globals::Game::GRID_CELL_SIZE)) }
+    , m_sprite { sf::RectangleShape(Vector2f(width * Globals::Game::GRID_CELL_SIZE, height * Globals::Game::GRID_CELL_SIZE)) }
 {
     m_tiles.reserve(width); // x: horizontal axis, y: vertical axis
     for (int i {}; i < width; ++i)

@@ -22,6 +22,12 @@ add_executable(ReCubed
 
     src/input/InputHandler.cpp
 
+    # src/states/LevelCompleteState.cpp
+    # src/states/LevelSelectState.cpp
+    # src/states/MainMenuState.cpp
+    # src/states/PauseState.cpp
+    src/states/PlayingState.cpp
+
     src/ui/components/Button.cpp
 )
 target_link_libraries(ReCubed sfml-graphics sfml-window sfml-audio sfml-system)

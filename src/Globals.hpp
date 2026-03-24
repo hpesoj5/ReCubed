@@ -19,6 +19,8 @@ namespace Globals
         inline constexpr int TILE_SIZE { 8 };
         inline constexpr int SIZE_MULTIPLIER { 4 };
         inline constexpr float GRID_CELL_SIZE { TILE_SIZE * SIZE_MULTIPLIER };
+
+        inline const sf::Color GRID_LINE_COLOR(0, 0, 0, 63);
     }
 
     namespace Player
@@ -27,6 +29,8 @@ namespace Globals
         inline constexpr float SIZE { Game::TILE_SIZE * Game::SIZE_MULTIPLIER * SIZE_MULTIPLIER };
         inline const sf::Color COLOR(0, 0, 255);
         inline const sf::Color REVERSE_COLOR(255, 0, 0);
+        inline const sf::Color GOAL_COLOR(0, 0, 255, 63);
+        inline const sf::Color REVERSE_GOAL_COLOR(255, 0, 0, 63);
     }
 
     namespace Text

@@ -2,14 +2,14 @@
 
 #include "Globals.hpp"
 #include "grid/Grid.hpp"
-#include "input/InputObserver.hpp"
+#include "input/IInputObserver.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
 using sf::Vector2f;
 using sf::Vector2i;
 
-class PlayerBase : public Input::InputObserver
+class PlayerBase : public Input::IInputObserver
 {
 public:
     explicit PlayerBase(Grid::Grid& grid);

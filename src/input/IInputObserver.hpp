@@ -4,10 +4,10 @@
 
 namespace Input
 {
-    class InputObserver
+    class IInputObserver
     {
     public:
-        virtual ~InputObserver() = default;
+        virtual ~IInputObserver() = default;
         virtual void onDirectionInput(Globals::Direction dir) = 0;
         // more virtual inputActions
     };

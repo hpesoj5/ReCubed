@@ -1,10 +1,9 @@
 #pragma once
 
-#include "grid/Grid.hpp"
-#include "entities/Player.hpp"
+#include "States.hpp"
 #include "input/InputHandler.hpp"
-// #include "UI.hpp"
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 class Game
 {
@@ -17,16 +16,16 @@ public:
     Game& operator=(Game&& other) = delete;
     ~Game();
 
-    void draw();
+    void setState(std::unique_ptr<IGameState> state);
+    void update(float dt) { m_state->update(dt); }
+
+    void draw() { m_state->draw(m_window); }
     void start();
 
 private:
     sf::RenderWindow m_window;
     Input::InputHandler m_inputHandler;
-
-    Grid::Grid m_grid;
-    Player m_player;
-    ReversePlayer r_player;
+    std::unique_ptr<IGameState> m_state;
 
     Game();
 };

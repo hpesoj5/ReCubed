@@ -36,7 +36,7 @@ void PlayerBase::move(Globals::Direction dir)
     }
 
     Vector2i newPos { currPos + applyDirection(delta) };
-    if (m_grid.inBounds(newPos))
+    if (m_grid.inBounds(newPos) && !m_grid.isWall(newPos))
     {
         m_pos = newPos;
         setPosition(newPos);
