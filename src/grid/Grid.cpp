@@ -51,7 +51,7 @@ Grid::Grid::Grid(int width, int height, const std::vector<std::vector<Tile::Tile
     m_sprite.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT / 2.f);
     m_sprite.setFillColor(sf::Color::Transparent);
     m_sprite.setOutlineThickness(2.f);
-    m_sprite.setOutlineColor(Globals::Colors::BG);
+    m_sprite.setOutlineColor(Globals::Colors::FG);
 }
 
 
@@ -62,7 +62,7 @@ void Grid::Grid::draw(sf::RenderWindow& window)
         sf::RectangleShape tileSprite(Vector2f(Globals::Game::GRID_CELL_SIZE, Globals::Game::GRID_CELL_SIZE));
         tileSprite.setOrigin(tileSprite.getSize() / 2.f);
         tileSprite.setPosition(coordsToVector2f(i, j));
-        setTileColor(tileSprite, m_tiles[i][j]);
+        setTileColor(tileSprite, m_tiles[i][j]); // guaranteed to exist after successful level creation
         //setTileTexture(tileSprite, tile);
 
         window.draw(tileSprite);
