@@ -14,8 +14,6 @@ namespace Grid
         {
             Empty,
             Wall,
-            Start,
-            RStart,
             Goal,
             RGoal,
         };

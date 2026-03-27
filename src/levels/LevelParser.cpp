@@ -46,8 +46,9 @@ namespace Levels
             for (int x {}; x < width; ++x)
             {
                 Grid::Tile::Tile tile;
+                char tileChar { lines.at(y).at(x) };
 
-                try { tile = charToTile(lines.at(y).at(x)); }
+                try { tile = charToTile(tileChar); }
                 catch (const std::out_of_range& e)
                 {
                     std::ostringstream err;
@@ -64,9 +65,8 @@ namespace Levels
                 if (tile != Grid::Tile::Tile::Empty)
                     builder.setTile(x, y, tile);
 
-                switch (tile)
+                if (tileChar == 'P' || tileChar == 'Q' || tileChar == 'S')
                 {
-                case Grid::Tile::Tile::Start:
                     if (startExists)
                     {
                         std::ostringstream err;
@@ -75,9 +75,10 @@ namespace Levels
                     }
                     startExists = true;
                     builder.setPlayerStart(x, y);
-                    break;
+                }
 
-                case Grid::Tile::Tile::RStart:
+                if (tileChar == 'R' || tileChar == 'T' || tileChar == 'U')
+                {
                     if (rStartExists)
                     {
                         std::ostringstream err;
@@ -86,9 +87,10 @@ namespace Levels
                     }
                     rStartExists = true;
                     builder.setRPlayerStart(x, y);
-                    break;
+                }
 
-                case Grid::Tile::Tile::Goal:
+                if (tileChar == 'p' || tileChar == 'Q' || tileChar == 'T')
+                {
                     if (goalExists)
                     {
                         std::ostringstream err;
@@ -97,9 +99,10 @@ namespace Levels
                     }
                     goalExists = true;
                     builder.setPlayerGoal(x, y);
-                    break;
+                }
 
-                case Grid::Tile::Tile::RGoal:
+                if (tileChar == 'r' || tileChar == 'S' || tileChar == 'U')
+                {
                     if (rGoalExists)
                     {
                         std::ostringstream err;
@@ -108,9 +111,6 @@ namespace Levels
                     }
                     rGoalExists = true;
                     builder.setRPlayerGoal(x, y);
-                    break;
-
-                default: break;
                 }
             }
         }
@@ -131,9 +131,13 @@ namespace Levels
         {
         case '.': return Grid::Tile::Tile::Empty;
         case '#': return Grid::Tile::Tile::Wall;
-        case 'P': return Grid::Tile::Tile::Start;
-        case 'R': return Grid::Tile::Tile::RStart;
-        case 'p': return Grid::Tile::Tile::Goal;
+        case 'P': return Grid::Tile::Tile::Empty;  // regular start
+        case 'R': return Grid::Tile::Tile::Empty;  // regular rstart
+        case 'Q': return Grid::Tile::Tile::Goal;  // start and goal
+        case 'S': return Grid::Tile::Tile::RGoal;  // start and rgoal
+        case 'T': return Grid::Tile::Tile::Goal;  // rstart and goal
+        case 'U': return Grid::Tile::Tile::RGoal;  // rstart and rgoal
+        case 'p': return Grid::Tile::Tile::Goal;   // this is the only place, together with levelBuilder where this confusion will appear
         case 'r': return Grid::Tile::Tile::RGoal;
         default:  throw(std::invalid_argument("Invalid tile character"));
         }

@@ -16,6 +16,7 @@ namespace Input
 
     private:
         void notifyDirection(Globals::Direction dir);
+        void notifyResetPosition();
         // more notify function overloads in the future
         std::vector<IInputObserver*> m_observers;
     };

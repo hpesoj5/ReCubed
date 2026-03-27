@@ -22,6 +22,12 @@ void InputHandler::notifyDirection(Globals::Direction dir)
         observer->onDirectionInput(dir);
 }
 
+void InputHandler::notifyResetPosition()
+{
+    for (IInputObserver* observer : m_observers)
+        observer->resetPosition();
+}
+
 void InputHandler::handleEvents(sf::RenderWindow& window)
 {
     sf::Event event;
@@ -45,6 +51,7 @@ void InputHandler::handleEvents(sf::RenderWindow& window)
                 case sf::Keyboard::Scan::Right: notifyDirection(Globals::Direction::Right); break;
                 case sf::Keyboard::Scan::D:     notifyDirection(Globals::Direction::Right); break;
                 case sf::Keyboard::Scan::L:     notifyDirection(Globals::Direction::Right); break;
+                case sf::Keyboard::Scan::R:     notifyResetPosition();
                 default: break;
             }
         }

@@ -14,12 +14,14 @@ PlayingState::PlayingState(int level, TransitionCallback onTransition)
     , r_player { ReversePlayer{ m_grid } }
     , m_onTransition { onTransition }
 {
-    std::string path { "src/levels/level_" + std::to_string(level) + ".level" };
+    std::string path { "src/levels/level_" + std::to_string(level) + ".data" };
     Levels::LevelData data { Levels::LevelParser::parse(path) };
 
     m_grid = Grid::Grid(data.width, data.height, data.tiles);
     m_player.resetGoal();
     r_player.resetGoal();
+    m_player.setStartPosition(data.playerStart);
+    r_player.setStartPosition(data.rPlayerStart);
     m_player.setPosition(data.playerStart);
     r_player.setPosition(data.rPlayerStart);
 

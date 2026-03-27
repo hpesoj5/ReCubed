@@ -8,7 +8,8 @@ namespace Input
     {
     public:
         virtual ~IInputObserver() = default;
-        virtual void onDirectionInput(Globals::Direction dir) = 0;
+        virtual void onDirectionInput(Globals::Direction dir) {}
+        virtual void resetPosition() {}
         // more virtual inputActions
     };
 }
