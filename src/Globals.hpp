@@ -14,6 +14,14 @@ namespace Globals
         Right,
     };
 
+    namespace Animations
+    {
+        sf::Vector2f lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t);
+        float easeInOut(float t);
+
+        inline constexpr float ANIMATION_DURATION { 0.1f };
+    }
+
     namespace Colors
     {
         inline const sf::Color BG { 255, 255, 255 };

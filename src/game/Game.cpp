@@ -22,7 +22,7 @@ void Game::setState(std::unique_ptr<IGameState> state)
 
 void Game::start()
 {
-    setState(std::make_unique<PlayingState>(1, [this](auto next) { setState(std::move(next)); } ));
+    setState(std::make_unique<PlayingState>(1, [this](auto next) { setState(std::move(next)); } ));  // bound to change
     sf::Clock clock;
     while (m_window.isOpen())
     {

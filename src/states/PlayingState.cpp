@@ -24,7 +24,8 @@ PlayingState::PlayingState(int level, TransitionCallback onTransition)
     r_player.setStartPosition(data.rPlayerStart);
     m_player.setPosition(data.playerStart);
     r_player.setPosition(data.rPlayerStart);
-
+    m_player.setTargetPosition(data.playerStart);
+    r_player.setTargetPosition(data.rPlayerStart);
 }
 
 void PlayingState::onEnter(Input::InputHandler& input)
@@ -41,14 +42,17 @@ void PlayingState::onExit(Input::InputHandler& input)
 
 void PlayingState::update(float dt)
 {
-    if (m_player.isAtGoal() && r_player.isAtGoal())
+    m_player.update(dt);
+    r_player.update(dt);
+
+    if (!m_player.isAnimating() && !r_player.isAnimating() && m_player.isAtGoal() && r_player.isAtGoal())
         m_onTransition(std::make_unique<PlayingState>(Globals::Game::nextLevel(m_level), m_onTransition));
 }
 
 void PlayingState::draw(sf::RenderWindow& window)
 {
      m_grid.draw(window);
-     if (m_player.getPosition() == r_player.getPosition())
+     if (m_player.getGlobalPosition() == r_player.getGlobalPosition())
      {
         sf::RectangleShape combinedPlayer(Vector2f(Globals::Player::SIZE, Globals::Player::SIZE));
         combinedPlayer.setOrigin(combinedPlayer.getSize() / 2.f);

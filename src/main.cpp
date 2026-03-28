@@ -1,8 +1,6 @@
-#include "Globals.hpp"
 #include "game/Game.hpp"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 int main() {
     // load default font
