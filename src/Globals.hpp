@@ -18,8 +18,6 @@ namespace Globals
     {
         sf::Vector2f lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t);
         float easeInOut(float t);
-
-        inline constexpr float ANIMATION_DURATION { 0.1f };
     }
 
     namespace Colors
@@ -53,6 +51,7 @@ namespace Globals
     {
         inline constexpr float SIZE_MULTIPLIER { 0.75 };
         inline constexpr float SIZE { Game::TILE_SIZE * Game::SIZE_MULTIPLIER * SIZE_MULTIPLIER };
+        inline float ANIMATION_DURATION { 0.1f };
     }
 
     namespace Text
