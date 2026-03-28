@@ -9,7 +9,7 @@
 namespace Input { class InputHandler; }
 namespace sf { class RenderWindow; }
 
-class PlayingState : public IGameState
+class PlayingState final : public IGameState
 {
 public:
     using TransitionCallback = std::function<void(std::unique_ptr<IGameState>)>;

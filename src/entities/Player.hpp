@@ -56,7 +56,7 @@ private:
 
 
 
-class Player: public PlayerBase
+class Player final : public PlayerBase
 {
 public:
     explicit Player(Grid::Grid& grid);
@@ -67,7 +67,7 @@ protected:
 
 
 
-class ReversePlayer: public PlayerBase
+class ReversePlayer final : public PlayerBase
 {
 public:
     explicit ReversePlayer(Grid::Grid& grid);
