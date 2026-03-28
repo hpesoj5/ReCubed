@@ -1,5 +1,6 @@
 # temporaries
 .cache
+notes.txt
 
 # dev build
 build/
