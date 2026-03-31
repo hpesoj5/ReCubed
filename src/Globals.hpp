@@ -43,8 +43,6 @@ namespace Globals
         inline constexpr float GRID_CELL_SIZE { TILE_SIZE * SIZE_MULTIPLIER };
 
         inline constexpr int NUM_LEVELS { 10 };
-
-        inline int nextLevel(int level) { return (level % NUM_LEVELS) + 1; }
     }
 
     namespace Player

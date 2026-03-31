@@ -1,4 +1,4 @@
-#include "PlayingState.hpp"
+#include "States.hpp"
 #include "input/InputHandler.hpp"
 #include "levels/LevelBuilder.hpp"
 #include "levels/LevelParser.hpp"
@@ -46,7 +46,12 @@ void PlayingState::update(float dt)
     r_player.update(dt);
 
     if (!m_player.isAnimating() && !r_player.isAnimating() && m_player.isAtGoal() && r_player.isAtGoal())
-        m_onTransition(std::make_unique<PlayingState>(Globals::Game::nextLevel(m_level), m_onTransition));
+    {
+        if (++m_level > Globals::Game::NUM_LEVELS)
+            m_onTransition(std::make_unique<MainMenuState>(m_onTransition));
+        else
+            m_onTransition(std::make_unique<PlayingState>(m_level, m_onTransition));
+    }
 }
 
 void PlayingState::draw(sf::RenderWindow& window)

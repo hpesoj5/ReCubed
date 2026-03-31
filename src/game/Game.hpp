@@ -17,15 +17,19 @@ public:
     ~Game();
 
     void setState(std::unique_ptr<IGameState> state);
-    void update(float dt) { m_state->update(dt); }
+    void pushState(std::unique_ptr<IGameState> state);
+    void popState();
+    void clearStateStack() { m_stateStack.clear(); }
+    void update(float dt) { m_stateStack.back()->update(dt); }
 
-    void draw() { m_state->draw(m_window); }
+    void draw() { m_stateStack.back()->draw(m_window); }
     void start();
+
 
 private:
     sf::RenderWindow m_window;
     Input::InputHandler m_inputHandler;
-    std::unique_ptr<IGameState> m_state;
+    std::vector<std::unique_ptr<IGameState>> m_stateStack;
 
     Game();
 };
