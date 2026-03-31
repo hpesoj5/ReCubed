@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
-#include <cmath>
+#include <string_view>
 
 namespace Globals
 {
@@ -58,6 +58,14 @@ namespace Globals
     {
         inline constexpr int DEFAULT_SIZE { 30 };
         inline sf::Font DEFAULT_FONT;
+        inline sf::Font DEFAULT_FONT_ITALIC;
+
+        void loadFont(sf::Font& font, const std::string& filepath);
+    }
+
+    namespace UI
+    {
+        inline const sf::Vector2f LABEL_SIZE { 150, 50 };
     }
 
     namespace Window

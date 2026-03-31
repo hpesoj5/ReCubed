@@ -17,6 +17,8 @@ namespace Input
     private:
         void notifyDirection(Globals::Direction dir);
         void notifyResetPosition();
+        void notifyMousePosition(float x, float y);
+        void notifyMouseClick();
         // more notify function overloads in the future
         std::vector<IInputObserver*> m_observers;
     };

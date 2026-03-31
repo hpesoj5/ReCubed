@@ -1,4 +1,5 @@
 #include "InputHandler.hpp"
+#include "input/IInputObserver.hpp"
 
 using Input::InputHandler;
 
@@ -28,6 +29,19 @@ void InputHandler::notifyResetPosition()
         observer->resetPosition();
 }
 
+void InputHandler::notifyMousePosition(float x, float y)
+{
+    Vector2f pos { x, y };
+    for (IInputObserver* observer : m_observers)
+        observer->onMouseHover(pos);
+}
+
+void InputHandler::notifyMouseClick()
+{
+    for (IInputObserver* observer : m_observers)
+        observer->onMouseClick();
+}
+
 void InputHandler::handleEvents(sf::RenderWindow& window)
 {
     sf::Event event;
@@ -54,6 +68,13 @@ void InputHandler::handleEvents(sf::RenderWindow& window)
                 case sf::Keyboard::Scan::R:     notifyResetPosition();
                 default: break;
             }
+        }
+        if (event.type == sf::Event::MouseMoved)
+            notifyMousePosition(event.mouseMove.x, event.mouseMove.y);
+        if (event.type == sf::Event::MouseButtonPressed)
+        {
+            if (event.mouseButton.button == sf::Mouse::Left)
+                notifyMouseClick();
         }
     }
 }

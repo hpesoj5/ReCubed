@@ -13,16 +13,23 @@ Game::~Game()
     if (m_state) m_state->onExit(m_inputHandler);
 }
 
+#include <iostream>
 void Game::setState(std::unique_ptr<IGameState> state)
 {
     if (m_state) m_state->onExit(m_inputHandler);
+    if (!state)
+    {
+        m_window.close();
+        std::cerr << "Window closed by \"Quit\" button\n";
+        return;
+    }
     m_state = std::move(state);
     m_state->onEnter(m_inputHandler);
 }
 
 void Game::start()
 {
-    setState(std::make_unique<PlayingState>(1, [this](auto next) { setState(std::move(next)); } ));  // bound to change
+    setState(std::make_unique<MainMenuState>([this](auto next) { setState(std::move(next)); } ));  // bound to change
     sf::Clock clock;
     while (m_window.isOpen())
     {

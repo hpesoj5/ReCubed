@@ -1,3 +1,10 @@
 #pragma once
 
-#include "ui/components/Button.hpp"
+#include "components/Button.hpp"
+#include "components/Label.hpp"
+
+namespace UI::Components
+{
+    class Button;
+    class Label;
+}

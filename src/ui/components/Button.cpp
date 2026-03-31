@@ -1,38 +1,34 @@
 #include "Button.hpp"
-#include "Globals.hpp"
-#include <string>
 #include <string_view>
 
 using sf::Vector2f;
 
 namespace UI::Components
 {
-    Button::Button(std::string_view label, const sf::Font& font)
-        : m_rect { sf::RectangleShape{} }
-        , m_label { sf::Text{ static_cast<std::string>(label), font, Globals::Text::DEFAULT_SIZE } }
+    Button::Button(ClickCallback onClick, std::string_view label, const sf::Font& font)
+        : Label { label, font }
+        , m_isActive { false }
+        , m_onClick { onClick }
     {}
 
-    Button::Button(const Vector2f& size, const Vector2f& pos, std::string_view label, const sf::Font& font)
-        : m_rect { sf::RectangleShape(size) }
-        , m_label { sf::Text{ static_cast<std::string>(label), font, Globals::Text::DEFAULT_SIZE } }
+    void Button::onMouseHover(const Vector2f& pos)
     {
-        m_rect.setOrigin(size / 2.f);
-        m_rect.setPosition(pos);
-
-        centerLabel();
-        m_label.setPosition(pos);
+        if (m_rect.getGlobalBounds().contains(pos))
+        {
+            setFillColor(Globals::Colors::FG);
+            setTextFillColor(Globals::Colors::BG);
+            m_isActive = true;
+        }
+        else
+        {
+            setFillColor(Globals::Colors::BG);
+            setTextFillColor(Globals::Colors::FG);
+            m_isActive = false;
+        }
     }
 
-    void Button::centerLabel()
+    void Button::onMouseClick()
     {
-        auto textCenter { m_label.getGlobalBounds().getSize() / 2.f };
-        auto localBounds { textCenter + m_label.getLocalBounds().getPosition() };
-        auto rounded { round(localBounds) };
-        m_label.setOrigin(rounded);
-    }
-
-    void Button::draw()
-    {
-
+        if (isActive()) m_onClick();
     }
 }

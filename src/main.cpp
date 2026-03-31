@@ -4,11 +4,9 @@
 
 int main() {
     // load default font
-    // if (!Globals::DEFAULT_FONT.loadFromFile("OpenSans.ttf"))
-    // {
-    //     std::cerr << "Couldn't load font\n";
-    //     return EXIT_FAILURE;
-    // }
+    Globals::Text::loadFont(Globals::Text::DEFAULT_FONT, "src/assets/OpenSans.ttf");
+    Globals::Text::loadFont(Globals::Text::DEFAULT_FONT_ITALIC, "src/assets/OpenSansItalic.ttf");
+
 
     Game& game { Game::getGame() };
     game.start();
