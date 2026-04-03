@@ -51,7 +51,7 @@ private:
     Vector2i m_targetPos;
     bool m_atGoal;
     float m_animProgress;
-    static inline float animDuration { Globals::Player::ANIMATION_DURATION };
+    static inline float animDuration { Globals::Animations::PLAYER_DURATION };
 };
 
 
