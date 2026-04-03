@@ -5,7 +5,7 @@
 class SettingsState : public IGameState
 {
 public:
-    SettingsState(PopStateTransitionCallback /* onExitMenu */) {}
+    SettingsState(PopStateCallback /* onExitMenu */) {}
 
     void onEnter(Input::InputHandler& /* input */) override {}
     void onExit(Input::InputHandler& /* input */) override {}

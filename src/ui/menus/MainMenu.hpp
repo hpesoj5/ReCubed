@@ -10,7 +10,7 @@ namespace UI::Menu
     class MainMenu final
     {
     public:
-        MainMenu(TransitionCallback setState, TransitionCallback pushState, PopStateTransitionCallback popState);
+        MainMenu(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState);
 
         void subscribeTo(Input::InputHandler& input);
         void unsubscribeFrom(Input::InputHandler& input);

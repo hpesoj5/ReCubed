@@ -30,8 +30,10 @@ namespace UI::Components
             m_rect.setSize(size);
             m_rect.setOrigin(m_rect.getSize() / 2.f);
         }
+        void setSize(float x, float y) { setSize(Vector2f(x, y)); }
         void setTexture(const sf::Texture *texture, bool resetRect=false) { m_rect.setTexture(texture, resetRect); }
         void setTextureRect(const sf::IntRect &rect) { m_rect.setTextureRect(rect); }
+        void setTextStyle(sf::Text::Style style) { m_label.setStyle(style); }
         void setTextFont(const sf::Font& font) { m_label.setFont(font); centerText(); }
         void setTextSize(unsigned int size) { m_label.setCharacterSize(size); centerText(); }
         void setTextFillColor(const sf::Color& color) { m_label.setFillColor(color); }

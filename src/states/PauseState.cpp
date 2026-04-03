@@ -2,7 +2,7 @@
 #include "input/InputHandler.hpp"
 #include "states/IGameState.hpp"
 
-PauseState::PauseState(TransitionCallback setState, TransitionCallback pushState, PopStateTransitionCallback popState)
+PauseState::PauseState(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState)
     : m_menu { setState, pushState, popState }
     , m_popState { popState }
 {}
@@ -19,7 +19,8 @@ void PauseState::onExit(Input::InputHandler& input)
     input.unsubscribe(this);
 }
 
-void PauseState::onEscapePressed()
+bool PauseState::onEscapePressed()
 {
     m_popState();
+    return true;
 }

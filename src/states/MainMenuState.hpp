@@ -7,7 +7,7 @@
 class MainMenuState final : public IGameState
 {
 public:
-    MainMenuState(TransitionCallback setState, TransitionCallback pushState, PopStateTransitionCallback popState)
+    MainMenuState(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState)
         : m_menu { setState, pushState, popState }
     {}
 

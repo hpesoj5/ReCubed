@@ -17,4 +17,4 @@ public:
 };
 
 using TransitionCallback = std::function<void(std::unique_ptr<IGameState>)>;
-using PopStateTransitionCallback = std::function<void()>;
+using PopStateCallback = std::function<void()>;

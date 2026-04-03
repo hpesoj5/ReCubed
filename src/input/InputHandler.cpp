@@ -18,39 +18,44 @@ void InputHandler::unsubscribe(IInputObserver* observer)
     );
 }
 
-void InputHandler::notifyDirection(Globals::Direction dir)
+void InputHandler::notifyDirection(const ObserverList& observers, Globals::Direction dir)
 {
-    for (IInputObserver* observer : m_observers)
+    for (IInputObserver* observer : observers)
         observer->onDirectionInput(dir);
 }
 
-void InputHandler::notifyResetPosition()
+void InputHandler::notifyResetPosition(const ObserverList& observers)
 {
-    for (IInputObserver* observer : m_observers)
+    for (IInputObserver* observer : observers)
         observer->resetPosition();
 }
 
-void InputHandler::notifyMousePosition(float x, float y)
+void InputHandler::notifyMousePosition(const ObserverList& observers, float x, float y)
 {
     Vector2f pos { x, y };
-    for (IInputObserver* observer : m_observers)
+    for (IInputObserver* observer : observers)
         observer->onMouseHover(pos);
 }
 
-void InputHandler::notifyMouseClick()
+void InputHandler::notifyMouseClick(const ObserverList& observers)
 {
-    for (IInputObserver* observer : m_observers)
-        observer->onMouseClick();
+    for (IInputObserver* observer : observers)
+    {
+        if (observer->onMouseClick()) break;
+    }
 }
 
-void InputHandler::notifyEscapePressed()
+void InputHandler::notifyEscapePressed(const ObserverList& observers)
 {
-    for (IInputObserver* observer : m_observers)
-        observer->onEscapePressed();
+    for (IInputObserver* observer : observers)
+    {
+        if (observer->onEscapePressed()) break;
+    }
 }
 
 void InputHandler::handleEvents(sf::RenderWindow& window)
 {
+    auto observers { m_observers };
     sf::Event event;
     while (window.pollEvent(event))
     {
@@ -60,29 +65,29 @@ void InputHandler::handleEvents(sf::RenderWindow& window)
         {
             switch (event.key.scancode)
             {
-                case sf::Keyboard::Scan::Up:     notifyDirection(Globals::Direction::Up);    break;
-                case sf::Keyboard::Scan::W:      notifyDirection(Globals::Direction::Up);    break;
-                case sf::Keyboard::Scan::K:      notifyDirection(Globals::Direction::Up);    break;
-                case sf::Keyboard::Scan::Down:   notifyDirection(Globals::Direction::Down);  break;
-                case sf::Keyboard::Scan::S:      notifyDirection(Globals::Direction::Down);  break;
-                case sf::Keyboard::Scan::J:      notifyDirection(Globals::Direction::Down);  break;
-                case sf::Keyboard::Scan::Left:   notifyDirection(Globals::Direction::Left);  break;
-                case sf::Keyboard::Scan::A:      notifyDirection(Globals::Direction::Left);  break;
-                case sf::Keyboard::Scan::H:      notifyDirection(Globals::Direction::Left);  break;
-                case sf::Keyboard::Scan::Right:  notifyDirection(Globals::Direction::Right); break;
-                case sf::Keyboard::Scan::D:      notifyDirection(Globals::Direction::Right); break;
-                case sf::Keyboard::Scan::L:      notifyDirection(Globals::Direction::Right); break;
-                case sf::Keyboard::Scan::R:      notifyResetPosition(); break;
-                case sf::Keyboard::Scan::Escape: notifyEscapePressed(); break;
+                case sf::Keyboard::Scan::Up:     notifyDirection(observers, Globals::Direction::Up);    break;
+                case sf::Keyboard::Scan::W:      notifyDirection(observers, Globals::Direction::Up);    break;
+                case sf::Keyboard::Scan::K:      notifyDirection(observers, Globals::Direction::Up);    break;
+                case sf::Keyboard::Scan::Down:   notifyDirection(observers, Globals::Direction::Down);  break;
+                case sf::Keyboard::Scan::S:      notifyDirection(observers, Globals::Direction::Down);  break;
+                case sf::Keyboard::Scan::J:      notifyDirection(observers, Globals::Direction::Down);  break;
+                case sf::Keyboard::Scan::Left:   notifyDirection(observers, Globals::Direction::Left);  break;
+                case sf::Keyboard::Scan::A:      notifyDirection(observers, Globals::Direction::Left);  break;
+                case sf::Keyboard::Scan::H:      notifyDirection(observers, Globals::Direction::Left);  break;
+                case sf::Keyboard::Scan::Right:  notifyDirection(observers, Globals::Direction::Right); break;
+                case sf::Keyboard::Scan::D:      notifyDirection(observers, Globals::Direction::Right); break;
+                case sf::Keyboard::Scan::L:      notifyDirection(observers, Globals::Direction::Right); break;
+                case sf::Keyboard::Scan::R:      notifyResetPosition(observers); break;
+                case sf::Keyboard::Scan::Escape: notifyEscapePressed(observers); break;
                 default: break;
             }
         }
         if (event.type == sf::Event::MouseMoved)
-            notifyMousePosition(event.mouseMove.x, event.mouseMove.y);
+            notifyMousePosition(observers, event.mouseMove.x, event.mouseMove.y);
         if (event.type == sf::Event::MouseButtonPressed)
         {
             if (event.mouseButton.button == sf::Mouse::Left)
-                notifyMouseClick();
+                notifyMouseClick(observers);
         }
     }
 }

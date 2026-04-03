@@ -9,12 +9,12 @@
 using sf::Vector2f;
 using sf::Vector2i;
 
-PlayingState::PlayingState(int level, TransitionCallback setState, TransitionCallback pushState, PopStateTransitionCallback popState)
+PlayingState::PlayingState(int level, TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState)
     : m_grid { Grid::Grid{} } // in the future, size will depend on the level
     , m_level { level }
     , m_player { Player{ m_grid } }
     , r_player { ReversePlayer{ m_grid } }
-    , m_pauseButton { [setState, pushState, popState]() { pushState(std::make_unique<PauseState>(setState, pushState, popState)); } }
+    , m_pauseButton { [setState, pushState, popState]() { pushState(std::make_unique<PauseState>(setState, pushState, popState)); }, "||" }
     , m_setState { setState }
     , m_pushState { pushState }
     , m_popState { popState }
@@ -31,6 +31,14 @@ PlayingState::PlayingState(int level, TransitionCallback setState, TransitionCal
     r_player.setPosition(data.rPlayerStart);
     m_player.setTargetPosition(data.playerStart);
     r_player.setTargetPosition(data.rPlayerStart);
+
+    m_pauseButton.setSize(25.f, 25.f);
+    m_pauseButton.setPosition(20.f, 20.f);
+    m_pauseButton.setOutlineColor(Globals::Colors::FG);
+    m_pauseButton.setOutlineThickness(2.f);
+    m_pauseButton.setTextFillColor(Globals::Colors::FG);
+    m_pauseButton.setTextStyle(sf::Text::Bold);
+    m_pauseButton.setTextSize(15);
 }
 
 void PlayingState::onEnter(Input::InputHandler& input)
@@ -38,10 +46,12 @@ void PlayingState::onEnter(Input::InputHandler& input)
     input.subscribe(this);
     input.subscribe(&m_player);
     input.subscribe(&r_player);
+    input.subscribe(&m_pauseButton);
 }
 
 void PlayingState::onExit(Input::InputHandler& input)
 {
+    input.unsubscribe(&m_pauseButton);
     input.unsubscribe(&r_player);
     input.unsubscribe(&m_player);
     input.unsubscribe(this);
@@ -80,9 +90,12 @@ void PlayingState::draw(sf::RenderWindow& window)
          m_player.draw(window);
          r_player.draw(window);
      }
+
+     m_pauseButton.draw(window);
 }
 
-void PlayingState::onEscapePressed()
+bool PlayingState::onEscapePressed()
 {
     m_pushState(std::make_unique<PauseState>(m_setState, m_pushState, m_popState));
+    return true;
 }

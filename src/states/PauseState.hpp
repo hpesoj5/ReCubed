@@ -7,16 +7,16 @@
 class PauseState final : public IGameState, public Input::IInputObserver
 {
 public:
-    PauseState(TransitionCallback setState, TransitionCallback pushState, PopStateTransitionCallback popState);
+    PauseState(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState);
 
     void onEnter(Input::InputHandler& input) override;
     void onExit(Input::InputHandler& input) override;
     void update(float dt) override { m_menu.update(dt); }
     void draw(sf::RenderWindow& window) override { m_menu.draw(window); }
 
-    void onEscapePressed() override;
+    bool onEscapePressed() override;
 
 private:
     UI::Menu::PauseMenu m_menu;
-    PopStateTransitionCallback m_popState;
+    PopStateCallback m_popState;
 };

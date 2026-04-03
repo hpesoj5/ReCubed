@@ -17,7 +17,7 @@ namespace UI::Components
         Button(ClickCallback onClick, std::string_view label="", const sf::Font& font=Globals::Text::DEFAULT_FONT);
 
         void onMouseHover(const Vector2f& pos) override;
-        void onMouseClick() override;
+        bool onMouseClick() override;
 
         bool isActive() const { return m_isActive; }
 

@@ -8,7 +8,7 @@ namespace UI
 {
     namespace Menu
     {
-        MainMenu::MainMenu(TransitionCallback setState, TransitionCallback pushState, PopStateTransitionCallback popState)
+        MainMenu::MainMenu(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState)
             : m_title { "ReCubed" }
             , m_startButton { [setState, pushState, popState]() { setState(std::make_unique<PlayingState>(1, setState, pushState, popState)); }, "Start" }
             , m_settingsButton { [pushState, popState]() { pushState(std::make_unique<SettingsState>(popState)); }, "Settings" }

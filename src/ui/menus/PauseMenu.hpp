@@ -8,7 +8,7 @@ namespace UI::Menu
     class PauseMenu final
     {
     public:
-        PauseMenu(TransitionCallback setState, TransitionCallback pushState, PopStateTransitionCallback popState);
+        PauseMenu(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState);
 
         void subscribeTo(Input::InputHandler& input);
         void unsubscribeFrom(Input::InputHandler& input);
@@ -17,6 +17,7 @@ namespace UI::Menu
 
     private:
         UI::Components::Label m_pausedTitle;
+        UI::Components::Button m_pauseButton;
         UI::Components::Button m_resumeButton;
         UI::Components::Button m_settingsButton;
         UI::Components::Button m_quitButton;

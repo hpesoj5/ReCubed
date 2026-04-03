@@ -73,6 +73,7 @@ namespace Globals
 
         void centerText(sf::Text& text);
     }
+    inline int test;
 }
 
 sf::Vector2f round(const sf::Vector2f& vector);

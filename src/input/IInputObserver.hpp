@@ -14,8 +14,8 @@ namespace Input
         virtual void onDirectionInput(Globals::Direction /* dir */) {}
         virtual void resetPosition() {}
         virtual void onMouseHover(const Vector2f& /* pos */) {}
-        virtual void onMouseClick() {}
-        virtual void onEscapePressed() {}
+        virtual bool onMouseClick() { return false; }  // returns true if action is invoked
+        virtual bool onEscapePressed() { return false; }
         // more virtual inputActions
     };
 }

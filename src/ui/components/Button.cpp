@@ -27,8 +27,14 @@ namespace UI::Components
         }
     }
 
-    void Button::onMouseClick()
+    bool Button::onMouseClick()
     {
-        if (isActive()) m_onClick();
+        if (isActive())
+        {
+            m_isActive = false;
+            m_onClick();
+            return true;
+        }
+        return false;
     }
 }

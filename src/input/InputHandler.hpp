@@ -10,18 +10,20 @@ namespace Input
     class InputHandler
     {
     public:
+        using ObserverList = std::vector<IInputObserver*>;
+        ObserverList getObserverListCopy() const { return m_observers; }
         void subscribe(IInputObserver* observer);
         void unsubscribe(IInputObserver* observer);
         void handleEvents(sf::RenderWindow& window);
 
-        void notifyDirection(Globals::Direction dir);
-        void notifyResetPosition();
-        void notifyMousePosition(float x, float y);
-        void notifyMouseClick();
-        void notifyEscapePressed();
+        void notifyDirection(const ObserverList& observers, Globals::Direction dir);
+        void notifyResetPosition(const ObserverList& observers);
+        void notifyMousePosition(const ObserverList& observers, float x, float y);
+        void notifyMouseClick(const ObserverList& observers);
+        void notifyEscapePressed(const ObserverList& observers);
 
     private:
         // more notify function overloads in the future
-        std::vector<IInputObserver*> m_observers;
+        ObserverList m_observers;
     };
 }
