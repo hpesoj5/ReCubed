@@ -11,7 +11,7 @@ namespace UI
         MainMenu::MainMenu(TransitionCallback setState, TransitionCallback pushState, PopStateTransitionCallback popState)
             : m_title { "ReCubed" }
             , m_startButton { [setState, pushState, popState]() { setState(std::make_unique<PlayingState>(1, setState, pushState, popState)); }, "Start" }
-            , m_settingsButton { [setState, popState]() { setState(std::make_unique<SettingsState>(popState)); }, "Settings" }
+            , m_settingsButton { [pushState, popState]() { pushState(std::make_unique<SettingsState>(popState)); }, "Settings" }
             , m_quitButton { [setState](){ setState(nullptr); }, "Quit" }
         {
             m_title.setPosition(Globals::Window::WIDTH / 2.f, 75.f);
