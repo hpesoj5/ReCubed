@@ -8,11 +8,11 @@ namespace UI
 {
     namespace Menu
     {
-        MainMenu::MainMenu(TransitionCallback onTransition)
+        MainMenu::MainMenu(TransitionCallback setState, TransitionCallback pushState, PopStateTransitionCallback popState)
             : m_title { "ReCubed" }
-            , m_startButton { [onTransition]() { onTransition(std::make_unique<PlayingState>(1, onTransition)); }, "Start" }
-            , m_settingsButton { [onTransition]() { onTransition(std::make_unique<SettingsState>(onTransition)); }, "Settings" }
-            , m_quitButton { [onTransition](){ onTransition(nullptr); }, "Quit" }
+            , m_startButton { [setState, pushState, popState]() { setState(std::make_unique<PlayingState>(1, setState, pushState, popState)); }, "Start" }
+            , m_settingsButton { [setState, popState]() { setState(std::make_unique<SettingsState>(popState)); }, "Settings" }
+            , m_quitButton { [setState](){ setState(nullptr); }, "Quit" }
         {
             m_title.setPosition(Globals::Window::WIDTH / 2.f, 75.f);
             m_title.setTextSize(50);
@@ -29,19 +29,22 @@ namespace UI
         {
             input.subscribe(&m_title);
             input.subscribe(&m_startButton);
+            // input.subscribe(&m_settingsButton);
             input.subscribe(&m_quitButton);
         }
 
-        void MainMenu::unsubscribeTo(Input::InputHandler& input)
+        void MainMenu::unsubscribeFrom(Input::InputHandler& input)
         {
             input.unsubscribe(&m_title);
             input.unsubscribe(&m_startButton);
+            // input.unsubscribe(&m_settingsButton);
             input.unsubscribe(&m_quitButton);
         }
 
-        void MainMenu::update(float dt)
+        void MainMenu::update(float /* dt */)
         {
-
+            // for any animations in the future
+            // will call update on each button if they are animating
         }
 
         void MainMenu::draw(sf::RenderWindow& window)

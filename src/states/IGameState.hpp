@@ -1,5 +1,8 @@
 #pragma once
 
+#include <functional>
+#include <memory>
+
 namespace Input { class InputHandler; }
 namespace sf { class RenderWindow; }
 
@@ -12,3 +15,6 @@ public:
     virtual void update(float dt) = 0;
     virtual void draw(sf::RenderWindow& window) = 0;
 };
+
+using TransitionCallback = std::function<void(std::unique_ptr<IGameState>)>;
+using PopStateTransitionCallback = std::function<void()>;

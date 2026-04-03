@@ -19,7 +19,7 @@ void Game::setState(std::unique_ptr<IGameState> state)
     if (!m_stateStack.empty())
         m_stateStack.back()->onExit(m_inputHandler);
 
-    m_stateStack.clear();
+    clearStateStack();
     if (!state)
     {
         m_window.close();
@@ -49,16 +49,26 @@ void Game::popState()
 
     if (!m_stateStack.empty())
         m_stateStack.back()->onEnter(m_inputHandler);
+
+    else
+        throw(std::runtime_error("State stack is empty, no current state to load"));
 }
 
 void Game::start()
 {
-    setState(std::make_unique<MainMenuState>([this](auto next) { setState(std::move(next)); } ));  // bound to change
+    setState(std::make_unique<MainMenuState>([this](auto next) { setState(std::move(next)); }, [this](auto next) { pushState(std::move(next)); }, [this]() { popState(); } ));  // bound to change
     sf::Clock clock;
     while (m_window.isOpen())
     {
         float dt { clock.restart().asSeconds() };
         m_inputHandler.handleEvents(m_window);
+
+        if (!hasState())
+        {
+            std::cerr << "State stack empty, quitting game...\n";
+            return;
+        }
+
         update(dt);
 
         m_window.clear(Globals::Colors::BG);

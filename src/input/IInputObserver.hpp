@@ -15,6 +15,7 @@ namespace Input
         virtual void resetPosition() {}
         virtual void onMouseHover(const Vector2f& /* pos */) {}
         virtual void onMouseClick() {}
+        virtual void onEscapePressed() {}
         // more virtual inputActions
     };
 }

@@ -2,17 +2,22 @@
 #include "input/InputHandler.hpp"
 #include "levels/LevelBuilder.hpp"
 #include "levels/LevelParser.hpp"
+#include "states/IGameState.hpp"
+#include "states/PauseState.hpp"
 #include <SFML/Graphics.hpp>
 
 using sf::Vector2f;
 using sf::Vector2i;
 
-PlayingState::PlayingState(int level, TransitionCallback onTransition)
+PlayingState::PlayingState(int level, TransitionCallback setState, TransitionCallback pushState, PopStateTransitionCallback popState)
     : m_grid { Grid::Grid{} } // in the future, size will depend on the level
     , m_level { level }
     , m_player { Player{ m_grid } }
     , r_player { ReversePlayer{ m_grid } }
-    , m_onTransition { onTransition }
+    , m_pauseButton { [setState, pushState, popState]() { pushState(std::make_unique<PauseState>(setState, pushState, popState)); } }
+    , m_setState { setState }
+    , m_pushState { pushState }
+    , m_popState { popState }
 {
     std::string path { "src/levels/level_" + std::to_string(level) + ".data" };
     Levels::LevelData data { Levels::LevelParser::parse(path) };
@@ -30,6 +35,7 @@ PlayingState::PlayingState(int level, TransitionCallback onTransition)
 
 void PlayingState::onEnter(Input::InputHandler& input)
 {
+    input.subscribe(this);
     input.subscribe(&m_player);
     input.subscribe(&r_player);
 }
@@ -38,6 +44,7 @@ void PlayingState::onExit(Input::InputHandler& input)
 {
     input.unsubscribe(&r_player);
     input.unsubscribe(&m_player);
+    input.unsubscribe(this);
 }
 
 void PlayingState::update(float dt)
@@ -48,9 +55,9 @@ void PlayingState::update(float dt)
     if (!m_player.isAnimating() && !r_player.isAnimating() && m_player.isAtGoal() && r_player.isAtGoal())
     {
         if (++m_level > Globals::Game::NUM_LEVELS)
-            m_onTransition(std::make_unique<MainMenuState>(m_onTransition));
+            m_setState(std::make_unique<MainMenuState>(m_setState, m_pushState, m_popState));
         else
-            m_onTransition(std::make_unique<PlayingState>(m_level, m_onTransition));
+            m_setState(std::make_unique<PlayingState>(m_level, m_setState, m_pushState, m_popState));
     }
 }
 
@@ -73,4 +80,9 @@ void PlayingState::draw(sf::RenderWindow& window)
          m_player.draw(window);
          r_player.draw(window);
      }
+}
+
+void PlayingState::onEscapePressed()
+{
+    m_pushState(std::make_unique<PauseState>(m_setState, m_pushState, m_popState));
 }

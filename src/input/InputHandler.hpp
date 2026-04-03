@@ -19,6 +19,7 @@ namespace Input
         void notifyResetPosition();
         void notifyMousePosition(float x, float y);
         void notifyMouseClick();
+        void notifyEscapePressed();
         // more notify function overloads in the future
         std::vector<IInputObserver*> m_observers;
     };

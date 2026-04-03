@@ -16,6 +16,7 @@ public:
     Game& operator=(Game&& other) = delete;
     ~Game();
 
+    bool hasState() const { return !m_stateStack.empty(); }
     void setState(std::unique_ptr<IGameState> state);
     void pushState(std::unique_ptr<IGameState> state);
     void popState();
