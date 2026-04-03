@@ -72,7 +72,7 @@ void InputHandler::handleEvents(sf::RenderWindow& window)
                 case sf::Keyboard::Scan::Right:  notifyDirection(Globals::Direction::Right); break;
                 case sf::Keyboard::Scan::D:      notifyDirection(Globals::Direction::Right); break;
                 case sf::Keyboard::Scan::L:      notifyDirection(Globals::Direction::Right); break;
-                case sf::Keyboard::Scan::R:      notifyResetPosition();
+                case sf::Keyboard::Scan::R:      notifyResetPosition(); break;
                 case sf::Keyboard::Scan::Escape: notifyEscapePressed(); break;
                 default: break;
             }
