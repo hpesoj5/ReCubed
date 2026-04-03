@@ -21,6 +21,8 @@ namespace UI::Components
 
         bool isActive() const { return m_isActive; }
 
+        void setCallback(ClickCallback onClick) { m_onClick = onClick; }
+
     private:
         bool m_isActive;
         ClickCallback m_onClick;

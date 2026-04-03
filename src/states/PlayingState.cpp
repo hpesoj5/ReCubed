@@ -5,6 +5,7 @@
 #include "states/IGameState.hpp"
 #include "states/PauseState.hpp"
 #include <SFML/Graphics.hpp>
+#include <functional>
 
 using sf::Vector2f;
 using sf::Vector2i;
@@ -14,7 +15,7 @@ PlayingState::PlayingState(int level, TransitionCallback setState, TransitionCal
     , m_level { level }
     , m_player { Player{ m_grid } }
     , r_player { ReversePlayer{ m_grid } }
-    , m_pauseButton { [setState, pushState, popState]() { pushState(std::make_unique<PauseState>(setState, pushState, popState)); }, "||" }
+    , m_pauseButton { {}, "||" }
     , m_setState { setState }
     , m_pushState { pushState }
     , m_popState { popState }
@@ -43,6 +44,8 @@ PlayingState::PlayingState(int level, TransitionCallback setState, TransitionCal
 
 void PlayingState::onEnter(Input::InputHandler& input)
 {
+    std::function<void()> callback { [this]() { m_pushState(std::make_unique<PauseState>(m_setState, m_pushState, m_popState, this)); } };
+    m_pauseButton.setCallback(callback);
     input.subscribe(this);
     input.subscribe(&m_player);
     input.subscribe(&r_player);
@@ -96,6 +99,6 @@ void PlayingState::draw(sf::RenderWindow& window)
 
 bool PlayingState::onEscapePressed()
 {
-    m_pushState(std::make_unique<PauseState>(m_setState, m_pushState, m_popState));
+    m_pushState(std::make_unique<PauseState>(m_setState, m_pushState, m_popState, this));
     return true;
 }

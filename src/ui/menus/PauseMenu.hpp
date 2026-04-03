@@ -21,5 +21,6 @@ namespace UI::Menu
         UI::Components::Button m_resumeButton;
         UI::Components::Button m_settingsButton;
         UI::Components::Button m_quitButton;
+        sf::RectangleShape m_overlay;
     };
 }

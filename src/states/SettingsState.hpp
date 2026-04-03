@@ -13,4 +13,5 @@ public:
     void draw(sf::RenderWindow& /* window */) override {}
 
 private:
+    IGameState* m_playingState;
 };

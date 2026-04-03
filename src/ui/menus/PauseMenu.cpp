@@ -15,8 +15,10 @@ namespace UI
             , m_resumeButton { popState, "Resume" }
             , m_settingsButton { [pushState, popState]() { pushState(std::make_unique<SettingsState>(popState)); }, "Settings" }
             , m_quitButton { [setState, pushState, popState]() { setState(std::make_unique<MainMenuState>(setState, pushState, popState)); }, "Quit" }
+            , m_overlay { Vector2f(Globals::Window::WIDTH, Globals::Window::HEIGHT) }
         {
             m_pausedTitle.setPosition(Globals::Window::WIDTH / 2.f, 75.f);
+            m_pausedTitle.setFillColor(sf::Color::Transparent);
             m_pausedTitle.setTextSize(50);
 
             m_pauseButton.setSize(25.f, 25.f);
@@ -33,6 +35,8 @@ namespace UI
             m_quitButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 75.f);
             m_quitButton.setOutlineColor(Globals::Colors::FG);
             m_quitButton.setOutlineThickness(2.f);
+
+            m_overlay.setFillColor(sf::Color(255, 255, 255, 191));
         }
 
         void PauseMenu::subscribeTo(Input::InputHandler& input)
@@ -58,6 +62,7 @@ namespace UI
 
         void PauseMenu::draw(sf::RenderWindow& window)
         {
+            window.draw(m_overlay);
             m_pausedTitle.draw(window);
             m_resumeButton.draw(window);
             // m_settingsButton.draw(window);

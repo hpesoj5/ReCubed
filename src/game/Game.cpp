@@ -33,8 +33,7 @@ void Game::setState(std::unique_ptr<IGameState> state)
     if (!emptyStack)
     {
         Vector2f mousePos { sf::Mouse::getPosition(m_window) };
-        auto observers { m_inputHandler.getObserverListCopy() };
-        m_inputHandler.notifyMousePosition(observers, mousePos.x, mousePos.y);
+        m_inputHandler.notifyMousePosition(mousePos.x, mousePos.y);
     }
 }
 
@@ -58,8 +57,7 @@ void Game::pushState(std::unique_ptr<IGameState> state)
     if (!emptyStack)
     {
         Vector2f mousePos { sf::Mouse::getPosition(m_window) };
-        auto observers { m_inputHandler.getObserverListCopy() };
-        m_inputHandler.notifyMousePosition(observers, mousePos.x, mousePos.y);
+        m_inputHandler.notifyMousePosition(mousePos.x, mousePos.y);
     }
 }
 
@@ -78,8 +76,7 @@ void Game::popState()
         throw(std::runtime_error("State stack is empty, no current state to load"));
 
     Vector2f mousePos { sf::Mouse::getPosition(m_window) };
-    auto observers { m_inputHandler.getObserverListCopy() };
-    m_inputHandler.notifyMousePosition(observers, mousePos.x, mousePos.y);
+    m_inputHandler.notifyMousePosition(mousePos.x, mousePos.y);
 }
 
 void Game::start()
