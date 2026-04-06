@@ -11,6 +11,7 @@ namespace Input
     {
     public:
         using ObserverList = std::vector<IInputObserver*>;
+        InputHandler(sf::RenderWindow& window) : m_window { window } {}
         void subscribe(IInputObserver* observer);
         void unsubscribe(IInputObserver* observer);
         void handleEvents(sf::RenderWindow& window);
@@ -18,11 +19,13 @@ namespace Input
         void notifyDirection(Globals::Direction dir);
         void notifyResetPosition();
         void notifyMousePosition(float x, float y);
-        void notifyMouseClick();
+        void notifyMouseClick(float x, float y);
         void notifyEscapePressed();
+        void notifyConfirm();
 
     private:
         // more notify function overloads in the future
+        sf::RenderWindow& m_window;
         ObserverList m_observers;
     };
 }

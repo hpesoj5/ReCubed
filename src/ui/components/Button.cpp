@@ -11,24 +11,30 @@ namespace UI::Components
         , m_onClick { onClick }
     {}
 
-    void Button::onMouseHover(const Vector2f& pos)
+    void Button::setActive(bool active)
     {
-        if (m_rect.getGlobalBounds().contains(pos))
+        m_isActive = active;
+
+        if (active)
         {
             setFillColor(Globals::Colors::FG);
             setTextFillColor(Globals::Colors::BG);
-            m_isActive = true;
         }
         else
         {
             setFillColor(Globals::Colors::BG);
             setTextFillColor(Globals::Colors::FG);
-            m_isActive = false;
         }
     }
 
-    bool Button::onMouseClick()
+    void Button::onMouseHover(const Vector2f& pos)
     {
+        setActive(m_rect.getGlobalBounds().contains(pos));
+    }
+
+    bool Button::onMouseClick(const Vector2f& pos)
+    {
+        setActive(m_rect.getGlobalBounds().contains(pos));
         if (isActive())
         {
             m_isActive = false;

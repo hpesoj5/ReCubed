@@ -9,13 +9,23 @@ namespace UI
 {
     namespace Menu
     {
+        using UI::Components::Button;
         PauseMenu::PauseMenu(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState)
             : m_pausedTitle { "PAUSED" }
             , m_pauseButton { popState, "||" }
-            , m_resumeButton { popState, "Resume" }
-            , m_settingsButton { [pushState, popState]() { pushState(std::make_unique<SettingsState>(popState)); }, "Settings" }
-            , m_quitButton { [setState, pushState, popState]() { setState(std::make_unique<MainMenuState>(setState, pushState, popState)); }, "Quit" }
+            , m_buttons {
+                Button { popState, "Resume" },
+                // Button { [pushState, popState]() { pushState(std::make_unique<SettingsState>(popState)); }, "Settings" },
+                Button { [](){}, "Settings" },
+                Button { [setState, pushState, popState]() { setState(std::make_unique<MainMenuState>(setState, pushState, popState)); }, "Quit" }
+            }
+            , m_resumeButton { m_buttons[0] }
+            , m_settingsButton { m_buttons[1] }
+            , m_quitButton { m_buttons[2] }
             , m_overlay { Vector2f(Globals::Window::WIDTH, Globals::Window::HEIGHT) }
+            , m_lastMousePos {}
+            , m_selectedIndex { 0 }
+            , m_active { false }
         {
             m_pausedTitle.setPosition(Globals::Text::TITLE_POSITION);
             m_pausedTitle.setFillColor(sf::Color::Transparent);
@@ -29,10 +39,15 @@ namespace UI
             m_pauseButton.setTextStyle(sf::Text::Bold);
             m_pauseButton.setTextSize(15);
 
-            m_resumeButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 150.f);
+            m_resumeButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 180.f);
             m_resumeButton.setOutlineColor(Globals::Colors::FG);
             m_resumeButton.setOutlineThickness(2.f);
-            m_quitButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 75.f);
+
+            m_settingsButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 120.f);
+            m_settingsButton.setOutlineColor(Globals::Colors::FG);
+            m_settingsButton.setOutlineThickness(2.f);
+
+            m_quitButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 60.f);
             m_quitButton.setOutlineColor(Globals::Colors::FG);
             m_quitButton.setOutlineThickness(2.f);
 
@@ -41,18 +56,18 @@ namespace UI
 
         void PauseMenu::subscribeTo(Input::InputHandler& input)
         {
+            input.subscribe(this);
             input.subscribe(&m_pauseButton);
-            input.subscribe(&m_resumeButton);
-            // input.subscribe(&m_settingsButton);
-            input.subscribe(&m_quitButton);
+            for (auto& button : m_buttons)
+                input.subscribe(&button);
         }
 
         void PauseMenu::unsubscribeFrom(Input::InputHandler& input)
         {
-            input.unsubscribe(&m_quitButton);
-            // input.unsubscribe(&m_settingsButton);
-            input.unsubscribe(&m_resumeButton);
+            for (auto it { m_buttons.rbegin() }; it != m_buttons.rend(); ++it)
+                input.unsubscribe(&(*it));
             input.unsubscribe(&m_pauseButton);
+            input.unsubscribe(this);
         }
 
         void PauseMenu::update(float /* dt */)
@@ -64,10 +79,56 @@ namespace UI
         {
             window.draw(m_overlay);
             m_pausedTitle.draw(window);
-            m_resumeButton.draw(window);
-            // m_settingsButton.draw(window);
-            m_quitButton.draw(window);
             m_pauseButton.draw(window);
+            for (auto& button : m_buttons)
+                button.draw(window);
+        }
+
+        void PauseMenu::onDirectionInput(Globals::Direction dir)
+        {
+            auto numButtons { m_buttons.size() };
+            if (m_active)
+            {
+                switch (dir)
+                {
+                case Globals::Direction::Up:
+                    m_selectedIndex = (m_selectedIndex + 2) % numButtons;
+                    break;
+                case Globals::Direction::Left:
+                    m_selectedIndex = (m_selectedIndex + 2) % numButtons;
+                    break;
+                case Globals::Direction::Down:
+                    m_selectedIndex = (m_selectedIndex + 1) % numButtons;
+                    break;
+                case Globals::Direction::Right:
+                    m_selectedIndex = (m_selectedIndex + 1) % numButtons;
+                    break;
+                }
+            }
+            m_active = true;
+            for (int i {}; i < 3; ++i)
+            {
+                if (i == m_selectedIndex) m_buttons[i].setActive(true);
+                else m_buttons[i].setActive(false);
+            }
+        }
+
+        void PauseMenu::onMouseHover(const Vector2f& pos)
+        {
+            if (pos != m_lastMousePos)
+            {
+                m_active = false;
+                m_selectedIndex = 0;
+                m_lastMousePos = pos;
+            }
+        }
+
+        bool PauseMenu::onConfirm()
+        {
+            if (m_active)
+                m_buttons[m_selectedIndex].runCallback();
+
+            return m_active;
         }
     }
 }

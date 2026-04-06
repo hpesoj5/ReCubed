@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Globals.hpp"
-#include "input/IInputObserver.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <functional>
@@ -10,7 +9,7 @@ namespace UI::Components
 {
     using sf::Vector2f;
 
-    class Label : public Input::IInputObserver
+    class Label
     {
     public:
         using HoverCallback = std::function<void(const Vector2f& pos)>;

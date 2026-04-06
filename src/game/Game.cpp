@@ -5,6 +5,7 @@
 
 Game::Game()
     : m_window { sf::RenderWindow(sf::VideoMode({ Globals::Window::WIDTH, Globals::Window::HEIGHT }), "ReCubed", sf::Style::Close) }
+    , m_inputHandler { m_window }
 {
     m_window.setVerticalSyncEnabled(true);
 }

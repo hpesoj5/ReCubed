@@ -1,11 +1,13 @@
 #pragma once
 
+#include "input/IInputObserver.hpp"
 #include "states/IGameState.hpp"
 #include "ui/Components.hpp"
+#include <array>
 
 namespace UI::Menu
 {
-    class PauseMenu final
+    class PauseMenu final : public Input::IInputObserver
     {
     public:
         PauseMenu(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState);
@@ -15,12 +17,20 @@ namespace UI::Menu
         void update(float dt);
         void draw(sf::RenderWindow& window);
 
+        void onDirectionInput(Globals::Direction dir) override;
+        void onMouseHover(const Vector2f& pos) override;
+        bool onConfirm() override;
+
     private:
         UI::Components::Label m_pausedTitle;
         UI::Components::Button m_pauseButton;
-        UI::Components::Button m_resumeButton;
-        UI::Components::Button m_settingsButton;
-        UI::Components::Button m_quitButton;
+        std::array<UI::Components::Button, 3> m_buttons;
+        UI::Components::Button& m_resumeButton;
+        UI::Components::Button& m_settingsButton;
+        UI::Components::Button& m_quitButton;
         sf::RectangleShape m_overlay;
+        Vector2f m_lastMousePos;
+        int m_selectedIndex;
+        bool m_active;
     };
 }

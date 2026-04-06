@@ -40,12 +40,13 @@ void InputHandler::notifyMousePosition(float x, float y)
         observer->onMouseHover(pos);
 }
 
-void InputHandler::notifyMouseClick()
+void InputHandler::notifyMouseClick(float x, float y)
 {
+    Vector2f pos { x, y };
     auto observers { m_observers };
     for (IInputObserver* observer : observers)
     {
-        if (observer->onMouseClick()) break;
+        if (observer->onMouseClick(pos)) break;
     }
 }
 
@@ -55,6 +56,15 @@ void InputHandler::notifyEscapePressed()
     for (IInputObserver* observer : observers)
     {
         if (observer->onEscapePressed()) break;
+    }
+}
+
+void InputHandler::notifyConfirm()
+{
+    auto observers { m_observers };
+    for (IInputObserver* observer : observers)
+    {
+        if (observer->onConfirm()) break;
     }
 }
 
@@ -83,6 +93,8 @@ void InputHandler::handleEvents(sf::RenderWindow& window)
                 case sf::Keyboard::Scan::L:      notifyDirection(Globals::Direction::Right); break;
                 case sf::Keyboard::Scan::R:      notifyResetPosition();                      break;
                 case sf::Keyboard::Scan::Escape: notifyEscapePressed();                      break;
+                case sf::Keyboard::Scan::Enter:  notifyConfirm();                            break;
+                case sf::Keyboard::Scan::Space:  notifyConfirm();                            break;
                 default: break;
             }
         }
@@ -91,7 +103,10 @@ void InputHandler::handleEvents(sf::RenderWindow& window)
         if (event.type == sf::Event::MouseButtonPressed)
         {
             if (event.mouseButton.button == sf::Mouse::Left)
-                notifyMouseClick();
+            {
+                Vector2f pos { sf::Mouse::getPosition(m_window) };
+                notifyMouseClick(pos.x, pos.y);
+            }
         }
     }
 }

@@ -38,12 +38,12 @@ namespace Globals
 
     namespace Text
     {
-        const sf::Vector2f TITLE_POSITION { Globals::Window::WIDTH / 2.f, 75.f };
+        const sf::Vector2f TITLE_POSITION { Globals::Window::WIDTH / 2.f, 60.f };
     }
 
     namespace UI
     {
-        const sf::Vector2f LABEL_SIZE { 150, 50 };
+        const sf::Vector2f LABEL_SIZE { 150, 40 };
     }
 
     void Window::centerText(sf::Text& text)
