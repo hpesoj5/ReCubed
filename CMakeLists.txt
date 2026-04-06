@@ -26,14 +26,14 @@ add_executable(ReCubed
     src/levels/LevelParser.cpp
 
     # src/states/LevelCompleteState.cpp
-    # src/states/LevelSelectState.cpp
+    src/states/LevelSelectState.cpp
     src/states/PauseState.cpp
     src/states/PlayingState.cpp
 
     src/ui/components/Button.cpp
     src/ui/components/Label.cpp
 
-    # src/ui/menus/LevelSelectMenu.cpp
+    src/ui/menus/LevelSelectMenu.cpp
     src/ui/menus/MainMenu.cpp
     src/ui/menus/PauseMenu.cpp
     # src/ui/menus/SettingsMenu.cpp

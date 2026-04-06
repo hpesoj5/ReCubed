@@ -17,9 +17,9 @@ namespace UI
             , m_quitButton { [setState, pushState, popState]() { setState(std::make_unique<MainMenuState>(setState, pushState, popState)); }, "Quit" }
             , m_overlay { Vector2f(Globals::Window::WIDTH, Globals::Window::HEIGHT) }
         {
-            m_pausedTitle.setPosition(Globals::Window::WIDTH / 2.f, 75.f);
+            m_pausedTitle.setPosition(Globals::Text::TITLE_POSITION);
             m_pausedTitle.setFillColor(sf::Color::Transparent);
-            m_pausedTitle.setTextSize(50);
+            m_pausedTitle.setTextSize(Globals::Text::TITLE_SIZE);
 
             m_pauseButton.setSize(25.f, 25.f);
             m_pauseButton.setPosition(20.f, 20.f);

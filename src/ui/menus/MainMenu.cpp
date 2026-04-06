@@ -1,8 +1,7 @@
 #include "MainMenu.hpp"
 #include "input/InputHandler.hpp"
 #include "states/IGameState.hpp"
-#include "states/PlayingState.hpp"
-#include "states/SettingsState.hpp"
+#include "States.hpp"
 
 namespace UI
 {
@@ -10,12 +9,12 @@ namespace UI
     {
         MainMenu::MainMenu(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState)
             : m_title { "ReCubed" }
-            , m_startButton { [setState, pushState, popState]() { setState(std::make_unique<PlayingState>(1, setState, pushState, popState)); }, "Start" }
+            , m_startButton { [setState, pushState, popState]() { pushState(std::make_unique<LevelSelectState>(setState, pushState, popState)); }, "Start" }
             , m_settingsButton { [pushState, popState]() { pushState(std::make_unique<SettingsState>(popState)); }, "Settings" }
             , m_quitButton { [setState](){ setState(nullptr); }, "Quit" }
         {
-            m_title.setPosition(Globals::Window::WIDTH / 2.f, 75.f);
-            m_title.setTextSize(50);
+            m_title.setPosition(Globals::Text::TITLE_POSITION);
+            m_title.setTextSize(Globals::Text::TITLE_SIZE);
 
             m_startButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 150.f);
             m_startButton.setOutlineColor(Globals::Colors::FG);

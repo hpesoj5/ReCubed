@@ -1,8 +1,10 @@
 #pragma once
 
 #include "IGameState.hpp"
-#include "input/InputHandler.hpp"
 #include "ui/menus/MainMenu.hpp"
+
+namespace Input { class InputHandler; }
+namespace sf { class RenderWindow; }
 
 class MainMenuState final : public IGameState
 {

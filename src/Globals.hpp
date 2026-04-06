@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
-#include <string_view>
 
 namespace Globals
 {
@@ -14,28 +13,46 @@ namespace Globals
         Right,
     };
 
+    namespace Window
+    {
+        inline constexpr int WIDTH { 320 };
+        inline constexpr int HEIGHT { 320 };
+
+        void centerText(sf::Text& text);
+    }
+
     namespace Animations
     {
-        inline float PLAYER_DURATION { 0.1f };
+        extern float PLAYER_DURATION;
 
         sf::Vector2f lerp(const sf::Vector2f& a, const sf::Vector2f& b, float t);
         float easeInOut(float t);
     }
 
+    namespace Buttons
+    {
+        inline constexpr int NUM_COLUMNS { 4 };
+        inline constexpr float SIZE_1D { 40.f };
+        inline constexpr float GAP_1D { 20.f };
+        inline constexpr float TOTAL_WIDTH { SIZE_1D * NUM_COLUMNS + GAP_1D * (NUM_COLUMNS - 1) };
+        extern const sf::Vector2f SIZE;
+        extern const sf::Vector2f GAP;
+        extern const sf::Vector2f TOP_LEFT_POS;
+    }
+
     namespace Colors
     {
-        inline const sf::Color BG { 255, 255, 255 };
-        inline const sf::Color FG { 0, 0, 0 };
-        inline const sf::Color GRID_LINE { 0, 0, 0, 63 };
+        extern const sf::Color BG;
+        extern const sf::Color FG;
+        extern const sf::Color GRID_LINE;
 
-
-        inline const sf::Color WALL { 0, 0, 0 };
-        inline const sf::Color EMPTY { sf::Color::Transparent };
-        inline const sf::Color PLAYER { 0, 0, 255 };
-        inline const sf::Color RPLAYER { 255, 0, 0 };
-        inline const sf::Color PLAYER_OUTLINE { 0, 0, 0 };
-        inline const sf::Color GOAL { 0, 0, 255, 63 };
-        inline const sf::Color RGOAL { 255, 0, 0, 63 };
+        extern const sf::Color WALL;
+        extern const sf::Color EMPTY;
+        extern const sf::Color PLAYER;
+        extern const sf::Color RPLAYER;
+        extern const sf::Color PLAYER_OUTLINE;
+        extern const sf::Color GOAL;
+        extern const sf::Color RGOAL;
     }
 
     namespace Game
@@ -49,13 +66,16 @@ namespace Globals
 
     namespace Player
     {
-        inline constexpr float SIZE_MULTIPLIER { 0.75 };
+        inline constexpr float SIZE_MULTIPLIER { 0.75f };
         inline constexpr float SIZE { Game::TILE_SIZE * Game::SIZE_MULTIPLIER * SIZE_MULTIPLIER };
     }
 
     namespace Text
     {
         inline constexpr int DEFAULT_SIZE { 30 };
+        inline constexpr int TITLE_SIZE { 50 };
+        extern const sf::Vector2f TITLE_POSITION;
+
         inline sf::Font DEFAULT_FONT;
         inline sf::Font DEFAULT_FONT_ITALIC;
 
@@ -64,17 +84,8 @@ namespace Globals
 
     namespace UI
     {
-        inline const sf::Vector2f LABEL_SIZE { 150, 50 };
+        extern const sf::Vector2f LABEL_SIZE;
     }
-
-    namespace Window
-    {
-        inline constexpr int WIDTH { 320 };
-        inline constexpr int HEIGHT { 320 };
-
-        void centerText(sf::Text& text);
-    }
-    inline int test;
 }
 
 sf::Vector2f round(const sf::Vector2f& vector);
