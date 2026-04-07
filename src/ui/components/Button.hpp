@@ -23,11 +23,17 @@ namespace UI::Components
         void setActive(bool active);
         bool isActive() const { return m_isActive; }
 
+        void setLocked(bool locked);
+        bool isLocked() const { return m_isLocked; }
+
         void setCallback(ClickCallback onClick) { m_onClick = onClick; }
-        void runCallback() { m_onClick(); }
+        void runCallback() { if (!m_isLocked) m_onClick(); }
+
+        void draw(sf::RenderWindow& window) override;
 
     private:
         bool m_isActive;
+        bool m_isLocked;
         ClickCallback m_onClick;
     };
 }

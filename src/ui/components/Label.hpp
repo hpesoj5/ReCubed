@@ -45,12 +45,10 @@ namespace UI::Components
         void setPosition(const Vector2f& pos) { m_rect.setPosition(pos); m_label.setPosition(pos); }
 
         void centerText();
-        void draw(sf::RenderWindow& window);
+        virtual void draw(sf::RenderWindow& window);
 
     protected:
         sf::RectangleShape m_rect;
-
-    private:
         sf::Text m_label;
     };
 }

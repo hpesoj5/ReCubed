@@ -70,7 +70,10 @@ void PlayingState::update(float dt)
         if (++m_level > Globals::Game::NUM_LEVELS)
             m_setState(std::make_unique<MainMenuState>(m_setState, m_pushState, m_popState));
         else
+        {
+            // unlock the corresponding level select button by logging it (persists after program exits as well
             m_setState(std::make_unique<PlayingState>(m_level, m_setState, m_pushState, m_popState));
+        }
     }
 }
 

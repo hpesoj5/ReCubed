@@ -42,6 +42,9 @@ namespace UI
                     pos = { Globals::Buttons::TOP_LEFT_POS.x, pos.y + Globals::Buttons::SIZE.y + Globals::Buttons::GAP.y };
                 else pos.x += Globals::Buttons::SIZE.x + Globals::Buttons::GAP.x;
             }
+
+            for (size_t i { 1 }; i < m_levelButtons.size(); ++i)
+                m_levelButtons[i].setLocked(true);
         }
 
         void LevelSelectMenu::subscribeTo(Input::InputHandler& input)
@@ -73,25 +76,38 @@ namespace UI
                 switch (dir)
                 {
                 case Globals::Direction::Up:
-                    m_selectedIndex -= NUM_COLUMNS;
-                    if (m_selectedIndex < 0)
+                    do
                     {
-                        int lastRowStart = ((NUM_LEVELS - 1) / NUM_COLUMNS) * NUM_COLUMNS;
-                        m_selectedIndex = lastRowStart + m_selectedIndex + NUM_COLUMNS;
-                        while (m_selectedIndex >= NUM_LEVELS)
-                            m_selectedIndex -= NUM_COLUMNS;
-                    }
+                        m_selectedIndex -= NUM_COLUMNS;
+                        if (m_selectedIndex < 0)
+                        {
+                            int lastRowStart = ((NUM_LEVELS - 1) / NUM_COLUMNS) * NUM_COLUMNS;
+                            m_selectedIndex = lastRowStart + m_selectedIndex + NUM_COLUMNS;
+                            while (m_selectedIndex >= NUM_LEVELS)
+                                m_selectedIndex -= NUM_COLUMNS;
+                        }
+                    } while (m_levelButtons[m_selectedIndex].isLocked());
                     break;
                 case Globals::Direction::Down:
-                    m_selectedIndex += NUM_COLUMNS;
-                    if (m_selectedIndex >= NUM_LEVELS)
-                        m_selectedIndex %= NUM_COLUMNS;
+                    do
+                    {
+                        m_selectedIndex += NUM_COLUMNS;
+                        if (m_selectedIndex >= NUM_LEVELS)
+                            m_selectedIndex %= NUM_COLUMNS;
+                    }
+                    while (m_levelButtons[m_selectedIndex].isLocked());
                     break;
                 case Globals::Direction::Left:
-                    m_selectedIndex = (m_selectedIndex + NUM_LEVELS - 1) % NUM_LEVELS;
+                    do
+                    {
+                        m_selectedIndex = (m_selectedIndex + NUM_LEVELS - 1) % NUM_LEVELS;
+                    } while (m_levelButtons[m_selectedIndex].isLocked());
                     break;
                 case Globals::Direction::Right:
-                    m_selectedIndex = (m_selectedIndex + 1) % NUM_LEVELS;
+                    do
+                    {
+                        m_selectedIndex = (m_selectedIndex + 1) % NUM_LEVELS;
+                    } while (m_levelButtons[m_selectedIndex].isLocked());
                     break;
                 }
             }
