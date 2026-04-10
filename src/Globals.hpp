@@ -81,6 +81,13 @@ namespace Globals
         extern sf::Font DEFAULT_FONT_ITALIC;
 
         void loadFont(sf::Font& font, const std::string& filepath);
+        void loadFonts();
+    }
+
+    namespace Texture
+    {
+        extern sf::Texture ATLAS;
+        void loadTexture();
     }
 
     namespace UI

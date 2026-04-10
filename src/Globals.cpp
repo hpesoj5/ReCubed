@@ -42,6 +42,11 @@ namespace Globals
         sf::Font DEFAULT_FONT_ITALIC;
     }
 
+    namespace Texture
+    {
+        sf::Texture ATLAS;
+    }
+
     namespace UI
     {
         const sf::Vector2f TITLE_POSITION { Globals::Window::WIDTH / 2.f, 85.f };
@@ -71,6 +76,21 @@ namespace Globals
         if (!font.loadFromFile(filepath))
         {
             std::cerr << "Couldn't load font from " << filepath << '\n';
+        }
+    }
+
+    void Text::loadFonts()
+    {
+        Globals::Text::loadFont(Globals::Text::DEFAULT_FONT, "src/assets/OpenSans.ttf");
+        Globals::Text::loadFont(Globals::Text::DEFAULT_FONT_ITALIC, "src/assets/OpenSansItalic.ttf");
+    }
+
+    void Texture::loadTexture()
+    {
+        auto filepath { "src/assets/1-Bit/Tileset/tilest-table-8-8.png" };
+        if (!ATLAS.loadFromFile(filepath))
+        {
+            std::cerr << "Couldn't load texture from " << filepath << '\n';
         }
     }
 }
