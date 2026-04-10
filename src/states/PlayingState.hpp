@@ -12,7 +12,7 @@ namespace sf { class RenderWindow; }
 class PlayingState final : public IGameState, public Input::IInputObserver
 {
 public:
-    PlayingState(int level, TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState);
+    PlayingState(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState, int level);
 
     void onEnter(Input::InputHandler& input) override;
     void onExit(Input::InputHandler& input) override;
@@ -22,7 +22,6 @@ public:
 
 private:
     Grid::Grid m_grid;
-    int m_level;
     Player m_player;
     ReversePlayer r_player;
     UI::Components::Button m_pauseButton;
@@ -30,4 +29,5 @@ private:
     TransitionCallback m_setState;
     TransitionCallback m_pushState;
     PopStateCallback m_popState;
+    int m_level;
 };

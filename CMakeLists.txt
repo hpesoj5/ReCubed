@@ -25,6 +25,8 @@ add_executable(ReCubed
     src/levels/LevelBuilder.cpp
     src/levels/LevelParser.cpp
 
+    src/save/SaveManager.cpp
+
     # src/states/LevelCompleteState.cpp
     src/states/LevelSelectState.cpp
     src/states/PauseState.cpp

@@ -5,3 +5,6 @@ notes.txt
 # dev build
 build/
 compile_commands.json
+
+# save file
+src/save/save.dat

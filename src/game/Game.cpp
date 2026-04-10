@@ -1,6 +1,7 @@
 #include "Globals.hpp"
 #include "Game.hpp"
 #include "States.hpp"
+#include "save/SaveManager.hpp"
 #include <iostream>
 
 Game::Game()
@@ -82,7 +83,8 @@ void Game::popState()
 
 void Game::start()
 {
-    pushState(std::make_unique<MainMenuState>([this](auto next) { setState(std::move(next)); }, [this](auto next) { pushState(std::move(next)); }, [this]() { popState(); } ));  // bound to change
+    Globals::Game::highestLevel = Save::SaveManager::load();
+    pushState(std::make_unique<MainMenuState>([this](auto next) { setState(std::move(next)); }, [this](auto next) { pushState(std::move(next)); }, [this]() { popState(); }));  // bound to change
     sf::Clock clock;
     while (m_window.isOpen())
     {

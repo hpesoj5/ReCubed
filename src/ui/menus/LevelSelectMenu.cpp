@@ -21,9 +21,18 @@ namespace UI
             for (int i { 1 }; i <= Globals::Game::NUM_LEVELS; ++i)
             {
                 m_levelButtons.emplace_back(
-                    [=]() {
-                        setState(std::make_unique<PlayingState>(i, setState, pushState, popState));
+                    [setState, pushState, popState, i]() {
+                        setState(std::make_unique<PlayingState>(setState, pushState, popState, i));
                     }, std::to_string(i));
+
+                auto& button { m_levelButtons.back() };
+
+                button.setSize(Globals::Buttons::SIZE);
+                button.setOutlineColor(Globals::Colors::FG);
+                button.setOutlineThickness(2.f);
+
+                if (i > Globals::Game::highestLevel + 1)
+                  button.setLocked(true);
             }
 
             // decide where to place the buttons
@@ -32,9 +41,6 @@ namespace UI
             Vector2f pos { Globals::Buttons::TOP_LEFT_POS };
             for (auto& button : m_levelButtons)
             {
-                button.setSize(Globals::Buttons::SIZE);
-                button.setOutlineColor(Globals::Colors::FG);
-                button.setOutlineThickness(2.f);
                 button.setPosition(pos);
                 button.centerText();
 
@@ -42,9 +48,6 @@ namespace UI
                     pos = { Globals::Buttons::TOP_LEFT_POS.x, pos.y + Globals::Buttons::SIZE.y + Globals::Buttons::GAP.y };
                 else pos.x += Globals::Buttons::SIZE.x + Globals::Buttons::GAP.x;
             }
-
-            for (size_t i { 1 }; i < m_levelButtons.size(); ++i)
-                m_levelButtons[i].setLocked(true);
         }
 
         void LevelSelectMenu::subscribeTo(Input::InputHandler& input)

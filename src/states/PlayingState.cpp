@@ -1,32 +1,33 @@
+#include "Globals.hpp"
 #include "States.hpp"
 #include "input/InputHandler.hpp"
 #include "levels/LevelBuilder.hpp"
 #include "levels/LevelParser.hpp"
 #include "states/IGameState.hpp"
 #include "states/PauseState.hpp"
+#include "save/SaveManager.hpp"
 #include <SFML/Graphics.hpp>
 #include <functional>
 
 using sf::Vector2f;
 using sf::Vector2i;
 
-PlayingState::PlayingState(int level, TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState)
+PlayingState::PlayingState(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState, int level)
     : m_grid { Grid::Grid{} } // in the future, size will depend on the level
-    , m_level { level }
     , m_player { Player{ m_grid } }
     , r_player { ReversePlayer{ m_grid } }
     , m_pauseButton { {}, "||" }
     , m_setState { setState }
     , m_pushState { pushState }
     , m_popState { popState }
+    , m_level { level }
 {
-    std::string path { "src/levels/level_" + std::to_string(level) + ".data" };
+    std::string path { "src/levels/level_" + std::to_string(level) + ".dat" };
     Levels::LevelData data { Levels::LevelParser::parse(path) };
 
     m_grid = Grid::Grid(data.width, data.height, data.tiles);
     m_player.resetGoal();
-    r_player.resetGoal();
-    m_player.setStartPosition(data.playerStart);
+    r_player.resetGoal(); m_player.setStartPosition(data.playerStart);
     r_player.setStartPosition(data.rPlayerStart);
     m_player.setPosition(data.playerStart);
     r_player.setPosition(data.rPlayerStart);
@@ -67,12 +68,14 @@ void PlayingState::update(float dt)
 
     if (!m_player.isAnimating() && !r_player.isAnimating() && m_player.isAtGoal() && r_player.isAtGoal())
     {
+        Save::SaveManager::save(m_level);
+        Globals::Game::highestLevel = Save::SaveManager::load();
         if (++m_level > Globals::Game::NUM_LEVELS)
             m_setState(std::make_unique<MainMenuState>(m_setState, m_pushState, m_popState));
         else
         {
             // unlock the corresponding level select button by logging it (persists after program exits as well
-            m_setState(std::make_unique<PlayingState>(m_level, m_setState, m_pushState, m_popState));
+            m_setState(std::make_unique<PlayingState>(m_setState, m_pushState, m_popState, m_level));
         }
     }
 }
