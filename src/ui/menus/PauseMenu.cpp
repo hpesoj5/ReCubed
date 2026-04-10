@@ -27,7 +27,7 @@ namespace UI
             , m_selectedIndex { 0 }
             , m_active { false }
         {
-            m_pausedTitle.setPosition(Globals::Text::TITLE_POSITION);
+            m_pausedTitle.setPosition(Globals::UI::TITLE_POSITION);
             m_pausedTitle.setFillColor(sf::Color::Transparent);
             m_pausedTitle.setTextSize(Globals::Text::TITLE_SIZE);
 
@@ -39,15 +39,15 @@ namespace UI
             m_pauseButton.setTextStyle(sf::Text::Bold);
             m_pauseButton.setTextSize(15);
 
-            m_resumeButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 180.f);
+            m_resumeButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS);
             m_resumeButton.setOutlineColor(Globals::Colors::FG);
             m_resumeButton.setOutlineThickness(2.f);
 
-            m_settingsButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 120.f);
+            m_settingsButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS + Globals::UI::BUTTON_VERTICAL_GAP);
             m_settingsButton.setOutlineColor(Globals::Colors::FG);
             m_settingsButton.setOutlineThickness(2.f);
 
-            m_quitButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 60.f);
+            m_quitButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS + 2 * Globals::UI::BUTTON_VERTICAL_GAP);
             m_quitButton.setOutlineColor(Globals::Colors::FG);
             m_quitButton.setOutlineThickness(2.f);
 

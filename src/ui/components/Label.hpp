@@ -28,21 +28,22 @@ namespace UI::Components
         {
             m_rect.setSize(size);
             m_rect.setOrigin(m_rect.getSize() / 2.f);
+            centerText();
         }
         void setSize(float x, float y) { setSize(Vector2f(x, y)); }
         void setTexture(const sf::Texture *texture, bool resetRect=false) { m_rect.setTexture(texture, resetRect); }
         void setTextureRect(const sf::IntRect &rect) { m_rect.setTextureRect(rect); }
-        void setTextStyle(sf::Text::Style style) { m_label.setStyle(style); }
+        void setTextStyle(sf::Text::Style style) { m_label.setStyle(style); centerText(); }
         void setTextFont(const sf::Font& font) { m_label.setFont(font); centerText(); }
         void setTextSize(unsigned int size) { m_label.setCharacterSize(size); centerText(); }
         void setTextFillColor(const sf::Color& color) { m_label.setFillColor(color); }
         void setTextOutlineColor(const sf::Color& color) { m_label.setOutlineColor(color); }
-        void setTextOutlineThickness(float thickness) { m_label.setOutlineThickness(thickness); }
+        void setTextOutlineThickness(float thickness) { m_label.setOutlineThickness(thickness); centerText(); }
         void setFillColor(const sf::Color& color) { m_rect.setFillColor(color); }
         void setOutlineColor(const sf::Color& color) { m_rect.setOutlineColor(color); }
-        void setOutlineThickness(float thickness) { m_rect.setOutlineThickness(thickness); }
-        void setPosition(float x, float y) { m_rect.setPosition(x, y); m_label.setPosition(x, y); }
-        void setPosition(const Vector2f& pos) { m_rect.setPosition(pos); m_label.setPosition(pos); }
+        void setOutlineThickness(float thickness) { m_rect.setOutlineThickness(thickness); centerText(); }
+        void setPosition(float x, float y) { m_rect.setPosition(x, y); m_label.setPosition(x, y); centerText(); }
+        void setPosition(const Vector2f& pos) { m_rect.setPosition(pos); m_label.setPosition(pos); centerText(); }
 
         void centerText();
         virtual void draw(sf::RenderWindow& window);

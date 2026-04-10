@@ -15,8 +15,8 @@ namespace Globals
 
     namespace Window
     {
-        inline constexpr int WIDTH { 320 };
-        inline constexpr int HEIGHT { 320 };
+        inline constexpr int WIDTH { 400 };
+        inline constexpr int HEIGHT { 400 };
 
         void centerText(sf::Text& text);
     }
@@ -29,7 +29,7 @@ namespace Globals
         float easeInOut(float t);
     }
 
-    namespace Buttons
+    namespace LevelButtons
     {
         inline constexpr int NUM_COLUMNS { 4 };
         inline constexpr float SIZE_1D { 40.f };
@@ -76,7 +76,6 @@ namespace Globals
     {
         inline constexpr int DEFAULT_SIZE { 30 };
         inline constexpr int TITLE_SIZE { 50 };
-        extern const sf::Vector2f TITLE_POSITION;
 
         extern sf::Font DEFAULT_FONT;
         extern sf::Font DEFAULT_FONT_ITALIC;
@@ -86,7 +85,10 @@ namespace Globals
 
     namespace UI
     {
+        extern const sf::Vector2f TITLE_POSITION;
         extern const sf::Vector2f LABEL_SIZE;
+        inline constexpr float BUTTON_VERTICAL_GAP { 80 };
+        inline constexpr float BUTTON_TOP_YPOS { Window::HEIGHT - 225.f };
     }
 }
 

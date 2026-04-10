@@ -1,4 +1,5 @@
 #include "MainMenu.hpp"
+#include "Globals.hpp"
 #include "input/InputHandler.hpp"
 #include "states/IGameState.hpp"
 #include "States.hpp"
@@ -9,7 +10,8 @@ namespace UI
     {
         using UI::Components::Button;
         MainMenu::MainMenu(TransitionCallback setState, TransitionCallback pushState, PopStateCallback popState)
-            : m_title { "ReCubed" }
+            : m_setState { setState }
+            , m_title { "ReCubed" }
             , m_buttons {
                 Button { [setState, pushState, popState]() { pushState(std::make_unique<LevelSelectState>(setState, pushState, popState)); }, "Start" },
                 // Button { [pushState, popState]() { pushState(std::make_unique<SettingsState>(popState)); }, "Settings" },
@@ -23,18 +25,18 @@ namespace UI
             , m_selectedIndex { 0 }
             , m_active { false }
         {
-            m_title.setPosition(Globals::Text::TITLE_POSITION);
+            m_title.setPosition(Globals::UI::TITLE_POSITION);
             m_title.setTextSize(Globals::Text::TITLE_SIZE);
 
-            m_startButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 180.f);
+            m_startButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS);
             m_startButton.setOutlineColor(Globals::Colors::FG);
             m_startButton.setOutlineThickness(2.f);
 
-            m_settingsButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 120.f);
+            m_settingsButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS + Globals::UI::BUTTON_VERTICAL_GAP);
             m_settingsButton.setOutlineColor(Globals::Colors::FG);
             m_settingsButton.setOutlineThickness(2.f);
 
-            m_quitButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::Window::HEIGHT - 60.f);
+            m_quitButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS + 2 * Globals::UI::BUTTON_VERTICAL_GAP);
             m_quitButton.setOutlineColor(Globals::Colors::FG);
             m_quitButton.setOutlineThickness(2.f);
         }
@@ -104,6 +106,12 @@ namespace UI
                 m_selectedIndex = 0;
                 m_lastMousePos = pos;
             }
+        }
+
+        bool MainMenu::onEscapePressed()
+        {
+            m_setState(nullptr);
+            return true;
         }
 
         bool MainMenu::onConfirm()

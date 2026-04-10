@@ -14,11 +14,11 @@ namespace Globals
         float PLAYER_DURATION { 0.1f };
     }
 
-    namespace Buttons
+    namespace LevelButtons
     {
         const sf::Vector2f SIZE { SIZE_1D, SIZE_1D };
         const sf::Vector2f GAP { GAP_1D, GAP_1D };
-        const sf::Vector2f TOP_LEFT_POS { (static_cast<float>(Window::WIDTH) - TOTAL_WIDTH + SIZE_1D) / 2.f, 150.f };
+        const sf::Vector2f TOP_LEFT_POS { (static_cast<float>(Window::WIDTH) - TOTAL_WIDTH + SIZE_1D) / 2.f, 200.f };
     }
 
     namespace Colors
@@ -38,15 +38,14 @@ namespace Globals
 
     namespace Text
     {
-        const sf::Vector2f TITLE_POSITION { Globals::Window::WIDTH / 2.f, 60.f };
-
         sf::Font DEFAULT_FONT;
         sf::Font DEFAULT_FONT_ITALIC;
     }
 
     namespace UI
     {
-        const sf::Vector2f LABEL_SIZE { 150, 40 };
+        const sf::Vector2f TITLE_POSITION { Globals::Window::WIDTH / 2.f, 85.f };
+        const sf::Vector2f LABEL_SIZE { 175, 50 };
     }
 
     void Window::centerText(sf::Text& text)

@@ -21,9 +21,11 @@ namespace UI::Menu
 
         void onDirectionInput(Globals::Direction dir) override;
         void onMouseHover(const Vector2f& pos) override;
+        bool onEscapePressed() override;
         bool onConfirm() override;
 
     private:
+        TransitionCallback m_setState;
         UI::Components::Label m_title;
         std::array<UI::Components::Button, 3> m_buttons;
         UI::Components::Button& m_startButton;

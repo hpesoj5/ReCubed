@@ -14,7 +14,7 @@ namespace UI
             , m_selectedIndex { 0 }
             , m_active { false }
         {
-            m_title.setPosition(Globals::Text::TITLE_POSITION);
+            m_title.setPosition(Globals::UI::TITLE_POSITION);
             m_title.setTextSize(Globals::Text::TITLE_SIZE);
 
             m_levelButtons.reserve(Globals::Game::NUM_LEVELS);
@@ -27,7 +27,7 @@ namespace UI
 
                 auto& button { m_levelButtons.back() };
 
-                button.setSize(Globals::Buttons::SIZE);
+                button.setSize(Globals::LevelButtons::SIZE);
                 button.setOutlineColor(Globals::Colors::FG);
                 button.setOutlineThickness(2.f);
 
@@ -38,15 +38,15 @@ namespace UI
             // decide where to place the buttons
 
             int cnt {};
-            Vector2f pos { Globals::Buttons::TOP_LEFT_POS };
+            Vector2f pos { Globals::LevelButtons::TOP_LEFT_POS };
             for (auto& button : m_levelButtons)
             {
                 button.setPosition(pos);
                 button.centerText();
 
-                if (++cnt % Globals::Buttons::NUM_COLUMNS == 0)
-                    pos = { Globals::Buttons::TOP_LEFT_POS.x, pos.y + Globals::Buttons::SIZE.y + Globals::Buttons::GAP.y };
-                else pos.x += Globals::Buttons::SIZE.x + Globals::Buttons::GAP.x;
+                if (++cnt % Globals::LevelButtons::NUM_COLUMNS == 0)
+                    pos = { Globals::LevelButtons::TOP_LEFT_POS.x, pos.y + Globals::LevelButtons::SIZE.y + Globals::LevelButtons::GAP.y };
+                else pos.x += Globals::LevelButtons::SIZE.x + Globals::LevelButtons::GAP.x;
             }
         }
 
@@ -71,7 +71,7 @@ namespace UI
         }
 
         using Globals::Game::NUM_LEVELS;
-        using Globals::Buttons::NUM_COLUMNS;
+        using Globals::LevelButtons::NUM_COLUMNS;
         void LevelSelectMenu::onDirectionInput(Globals::Direction dir)
         {
             if (m_active)
