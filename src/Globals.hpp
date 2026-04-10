@@ -78,8 +78,8 @@ namespace Globals
         inline constexpr int TITLE_SIZE { 50 };
         extern const sf::Vector2f TITLE_POSITION;
 
-        inline sf::Font DEFAULT_FONT;
-        inline sf::Font DEFAULT_FONT_ITALIC;
+        extern sf::Font DEFAULT_FONT;
+        extern sf::Font DEFAULT_FONT_ITALIC;
 
         void loadFont(sf::Font& font, const std::string& filepath);
     }

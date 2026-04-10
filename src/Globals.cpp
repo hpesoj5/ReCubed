@@ -39,6 +39,9 @@ namespace Globals
     namespace Text
     {
         const sf::Vector2f TITLE_POSITION { Globals::Window::WIDTH / 2.f, 60.f };
+
+        sf::Font DEFAULT_FONT;
+        sf::Font DEFAULT_FONT_ITALIC;
     }
 
     namespace UI
