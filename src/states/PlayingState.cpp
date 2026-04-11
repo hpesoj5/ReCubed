@@ -34,11 +34,16 @@ PlayingState::PlayingState(TransitionCallback setState, TransitionCallback pushS
     m_player.setTargetPosition(data.playerStart);
     r_player.setTargetPosition(data.rPlayerStart);
 
-    m_pauseButton.setSize(25.f, 25.f);
-    m_pauseButton.setPosition(20.f, 20.f);
-    m_pauseButton.setOutlineColor(Globals::Colors::FG);
-    m_pauseButton.setOutlineThickness(2.f);
+    m_pauseButton.setSize(35.f, 35.f);
+    m_pauseButton.setPosition(25.f, 25.f);
+    // m_pauseButton.setFillColor(Globals::Colors::BG);
+    m_pauseButton.setInactiveFillColor(Globals::Colors::BG);
+    m_pauseButton.setActiveFillColor(Globals::Colors::FG);
+    // m_pauseButton.setOutlineColor(Globals::Colors::FG);
+    // m_pauseButton.setOutlineThickness(2.f);
     m_pauseButton.setTextFillColor(Globals::Colors::FG);
+    m_pauseButton.setActiveTextColor(Globals::Colors::BG);
+    m_pauseButton.setInactiveTextColor(Globals::Colors::FG);
     m_pauseButton.setTextStyle(sf::Text::Bold);
     m_pauseButton.setTextSize(15);
 }

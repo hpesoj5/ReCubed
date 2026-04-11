@@ -12,6 +12,7 @@ namespace UI::Components
         , m_label { sf::Text{ static_cast<std::string>(label), font, Globals::Text::DEFAULT_SIZE } }
     {
         m_rect.setOrigin(m_rect.getSize() / 2.f);
+        m_rect.setFillColor(sf::Color::Transparent);
         m_label.setFillColor(Globals::Colors::FG);
         // m_rect.setOutlineColor(Globals::Colors::FG);
         // m_rect.setOutlineThickness(2.f);

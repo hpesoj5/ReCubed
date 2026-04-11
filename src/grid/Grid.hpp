@@ -16,6 +16,14 @@ namespace Grid
             Wall,
             Goal,
             RGoal,
+            BorderT,
+            BorderB,
+            BorderL,
+            BorderR,
+            BorderTL,
+            BorderTR,
+            BorderBL,
+            BorderBR
         };
         inline bool isWall(Tile tile) { return tile == Tile::Wall; }
         void setTileColor(sf::RectangleShape& sprite, Tile tile);
@@ -38,7 +46,7 @@ namespace Grid
         bool isTile(const Vector2i& pos, Tile::Tile tile) const { return isTile(pos.x, pos.y, tile); }
         bool isWall(int x, int y) const { return Tile::isWall(m_tiles.at(x).at(y)); }
         bool isWall(const Vector2i& pos) const { return isWall(pos.x, pos.y); }
-        bool inBounds(int x, int y) const { return (x >= 0 && x < m_width && y >= 0 && y < m_height); }
+        bool inBounds(int x, int y) const { return (x > 0 && x < m_width - 1 && y > 0 && y < m_height - 1); }
         bool inBounds(const Vector2i& pos) const { return inBounds(pos.x, pos.y); }
 
         Vector2f coordsToVector2f(int x, int y) const;

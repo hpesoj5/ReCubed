@@ -5,6 +5,7 @@
 
 int main() {
     // load default font
+    Globals::Texture::loadTextures();
     Globals::Text::loadFonts();
 
     Game& game { Game::getGame() };

@@ -1,4 +1,5 @@
 #include "Button.hpp"
+#include "Globals.hpp"
 #include <string_view>
 
 using sf::Vector2f;
@@ -7,10 +8,18 @@ namespace UI::Components
 {
     Button::Button(ClickCallback onClick, std::string_view label, const sf::Font& font)
         : Label { label, font }
+        , m_onClick { onClick }
+        , m_activeFillColor { Globals::Colors::FG }
+        , m_inactiveFillColor { Globals::Colors::BG }
+        , m_activeTextColor { Globals::Colors::BG }
+        , m_inactiveTextColor { Globals::Colors::FG }
         , m_isActive { false }
         , m_isLocked { false }
-        , m_onClick { onClick }
-    {}
+    {
+        setTexture(&Globals::Texture::ATLAS);
+        setTextureRect(Globals::Texture::BUTTON);
+        setFillColor(sf::Color::White);
+    }
 
     void Button::setActive(bool active)
     {
@@ -19,13 +28,15 @@ namespace UI::Components
 
         if (active)
         {
-            setFillColor(Globals::Colors::FG);
-            setTextFillColor(Globals::Colors::BG);
+            setTextureRect(Globals::Texture::BUTTON_ACTIVE);
+            // setFillColor(m_activeFillColor);
+            // setTextFillColor(m_activeTextColor);
         }
         else
         {
-            setFillColor(Globals::Colors::BG);
-            setTextFillColor(Globals::Colors::FG);
+            setTextureRect(Globals::Texture::BUTTON);
+            // setFillColor(m_inactiveFillColor);
+            // setTextFillColor(m_inactiveTextColor);
         }
     }
 
@@ -35,13 +46,13 @@ namespace UI::Components
         if (locked)
         {
             setActive(false);
-            setOutlineColor(sf::Color(0, 0, 0, 63));
-            setFillColor(sf::Color(255, 255, 255, 191));
+            // setOutlineColor(sf::Color(0, 0, 0, 63));
+            // setFillColor(sf::Color(255, 255, 255, 191));
         }
         else
         {
-            setOutlineColor(Globals::Colors::BG);
-            setFillColor(Globals::Colors::BG);
+            // setOutlineColor(Globals::Colors::BG);
+            // setFillColor(Globals::Colors::BG);
         }
     }
 

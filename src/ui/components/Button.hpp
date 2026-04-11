@@ -29,11 +29,22 @@ namespace UI::Components
         void setCallback(ClickCallback onClick) { m_onClick = onClick; }
         void runCallback() { if (!m_isLocked) m_onClick(); }
 
+        void setActiveFillColor(const sf::Color& color) { m_activeFillColor = color; }
+        void setInactiveFillColor(const sf::Color& color) { m_inactiveFillColor = color; }
+        void setActiveTextColor(const sf::Color& color) { m_activeTextColor = color; }
+        void setInactiveTextColor(const sf::Color& color) { m_inactiveTextColor = color; }
+
         void draw(sf::RenderWindow& window) override;
 
     private:
+        ClickCallback m_onClick;
+
+        sf::Color m_activeFillColor;
+        sf::Color m_inactiveFillColor;
+        sf::Color m_activeTextColor;
+        sf::Color m_inactiveTextColor;
+
         bool m_isActive;
         bool m_isLocked;
-        ClickCallback m_onClick;
     };
 }

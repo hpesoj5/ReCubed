@@ -31,25 +31,25 @@ namespace UI
             m_pausedTitle.setFillColor(sf::Color::Transparent);
             m_pausedTitle.setTextSize(Globals::Text::TITLE_SIZE);
 
-            m_pauseButton.setSize(25.f, 25.f);
-            m_pauseButton.setPosition(20.f, 20.f);
-            m_pauseButton.setOutlineColor(Globals::Colors::FG);
-            m_pauseButton.setOutlineThickness(2.f);
+            m_pauseButton.setSize(35.f, 35.f);
+            m_pauseButton.setPosition(25.f, 25.f);
+            // m_pauseButton.setOutlineColor(Globals::Colors::FG);
+            // m_pauseButton.setOutlineThickness(2.f);
             m_pauseButton.setTextFillColor(Globals::Colors::FG);
             m_pauseButton.setTextStyle(sf::Text::Bold);
             m_pauseButton.setTextSize(15);
 
             m_resumeButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS);
-            m_resumeButton.setOutlineColor(Globals::Colors::FG);
-            m_resumeButton.setOutlineThickness(2.f);
+            // m_resumeButton.setOutlineColor(Globals::Colors::FG);
+            // m_resumeButton.setOutlineThickness(2.f);
 
             m_settingsButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS + Globals::UI::BUTTON_VERTICAL_GAP);
-            m_settingsButton.setOutlineColor(Globals::Colors::FG);
-            m_settingsButton.setOutlineThickness(2.f);
+            // m_settingsButton.setOutlineColor(Globals::Colors::FG);
+            // m_settingsButton.setOutlineThickness(2.f);
 
             m_quitButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS + 2 * Globals::UI::BUTTON_VERTICAL_GAP);
-            m_quitButton.setOutlineColor(Globals::Colors::FG);
-            m_quitButton.setOutlineThickness(2.f);
+            // m_quitButton.setOutlineColor(Globals::Colors::FG);
+            // m_quitButton.setOutlineThickness(2.f);
 
             m_overlay.setFillColor(sf::Color(255, 255, 255, 191));
         }

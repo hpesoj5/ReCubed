@@ -3,6 +3,11 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
 
+namespace Grid::Tile
+{
+    enum class Tile;
+}
+
 namespace Globals
 {
     enum class Direction
@@ -68,7 +73,7 @@ namespace Globals
 
     namespace Player
     {
-        inline constexpr float SIZE_MULTIPLIER { 0.75f };
+        inline constexpr float SIZE_MULTIPLIER { 0.95f };
         inline constexpr float SIZE { Game::TILE_SIZE * Game::SIZE_MULTIPLIER * SIZE_MULTIPLIER };
     }
 
@@ -87,7 +92,27 @@ namespace Globals
     namespace Texture
     {
         extern sf::Texture ATLAS;
-        void loadTexture();
+        void loadTextures();
+
+        // extern const sf::IntRect EMPTY;
+        extern const sf::IntRect WALL;
+        extern const sf::IntRect GOAL;
+        extern const sf::IntRect RGOAL;
+        extern const sf::IntRect BORDERT;
+        extern const sf::IntRect BORDERB;
+        extern const sf::IntRect BORDERL;
+        extern const sf::IntRect BORDERR;
+        extern const sf::IntRect BORDERTL;
+        extern const sf::IntRect BORDERTR;
+        extern const sf::IntRect BORDERBL;
+        extern const sf::IntRect BORDERBR;
+        const sf::IntRect* getTileTextureRect(Grid::Tile::Tile tile);
+
+        extern const sf::IntRect PLAYER;
+        extern const sf::IntRect RPLAYER;
+
+        extern const sf::IntRect BUTTON;
+        extern const sf::IntRect BUTTON_ACTIVE;
     }
 
     namespace UI

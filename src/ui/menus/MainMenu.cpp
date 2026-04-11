@@ -29,16 +29,16 @@ namespace UI
             m_title.setTextSize(Globals::Text::TITLE_SIZE);
 
             m_startButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS);
-            m_startButton.setOutlineColor(Globals::Colors::FG);
-            m_startButton.setOutlineThickness(2.f);
+            // m_startButton.setOutlineColor(Globals::Colors::FG);
+            // m_startButton.setOutlineThickness(2.f);
 
             m_settingsButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS + Globals::UI::BUTTON_VERTICAL_GAP);
-            m_settingsButton.setOutlineColor(Globals::Colors::FG);
-            m_settingsButton.setOutlineThickness(2.f);
+            // m_settingsButton.setOutlineColor(Globals::Colors::FG);
+            // m_settingsButton.setOutlineThickness(2.f);
 
             m_quitButton.setPosition(Globals::Window::WIDTH / 2.f, Globals::UI::BUTTON_TOP_YPOS + 2 * Globals::UI::BUTTON_VERTICAL_GAP);
-            m_quitButton.setOutlineColor(Globals::Colors::FG);
-            m_quitButton.setOutlineThickness(2.f);
+            // m_quitButton.setOutlineColor(Globals::Colors::FG);
+            // m_quitButton.setOutlineThickness(2.f);
         }
 
         void MainMenu::subscribeTo(Input::InputHandler& input)

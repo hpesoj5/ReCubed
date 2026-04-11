@@ -1,4 +1,5 @@
 #include "Globals.hpp"
+#include "grid/Grid.hpp"
 #include <cmath>
 #include <iostream>
 
@@ -23,17 +24,17 @@ namespace Globals
 
     namespace Colors
     {
-        const sf::Color BG { 255, 255, 255 };
-        const sf::Color FG { 0, 0, 0 };
+        const sf::Color BG { 12, 16, 24 };
+        const sf::Color FG { 251, 247, 243 };
         const sf::Color GRID_LINE { 0, 0, 0, 63 };
 
-        const sf::Color WALL { 0, 0, 0 };
+        const sf::Color WALL { FG };
         const sf::Color EMPTY { sf::Color::Transparent };
         const sf::Color PLAYER { 0, 0, 255 };
         const sf::Color RPLAYER { 255, 0, 0 };
-        const sf::Color PLAYER_OUTLINE { 0, 0, 0 };
-        const sf::Color GOAL { 0, 0, 255, 63 };
-        const sf::Color RGOAL { 255, 0, 0, 63 };
+        const sf::Color PLAYER_OUTLINE { FG };
+        const sf::Color GOAL { 0, 170, 255 };
+        const sf::Color RGOAL { 255, 85, 127 };
     }
 
     namespace Text
@@ -45,6 +46,25 @@ namespace Globals
     namespace Texture
     {
         sf::Texture ATLAS;
+
+        // const sf::IntRect EMPTY    { 0 , 80, 16, 16 };
+        const sf::IntRect WALL     { 152, 40, 16, 16 };
+        const sf::IntRect GOAL     { 152, 8, 24, 24 };
+        const sf::IntRect RGOAL    { 152, 8, 24, 24 };
+        const sf::IntRect BORDERT  { 96, 40, 8, 8 };
+        const sf::IntRect BORDERB  { 128, 24, 8, 8 };
+        const sf::IntRect BORDERL  { 120, 16, 8, 8 };
+        const sf::IntRect BORDERR  { 136, 16, 8, 8 };
+        const sf::IntRect BORDERTL { 88, 40, 8, 8 };
+        const sf::IntRect BORDERTR { 104, 40, 8, 8 };
+        const sf::IntRect BORDERBL { 120, 24, 8, 8 };
+        const sf::IntRect BORDERBR { 136, 24, 8, 8 };
+
+        const sf::IntRect PLAYER { 0, 64, 16, 16 };
+        const sf::IntRect RPLAYER { 16, 48, 16, 16 };
+
+        const sf::IntRect BUTTON { 64, 144, 24, 24 };
+        const sf::IntRect BUTTON_ACTIVE { 96, 144, 24, 24 };
     }
 
     namespace UI
@@ -85,12 +105,34 @@ namespace Globals
         Globals::Text::loadFont(Globals::Text::DEFAULT_FONT_ITALIC, "src/assets/OpenSansItalic.ttf");
     }
 
-    void Texture::loadTexture()
+    void Texture::loadTextures()
     {
-        auto filepath { "src/assets/1-Bit/Tileset/tilest-table-8-8.png" };
+        auto filepath { "src/assets/Tileset.png" };
         if (!ATLAS.loadFromFile(filepath))
         {
             std::cerr << "Couldn't load texture from " << filepath << '\n';
+            return;
+        }
+    }
+
+    using Grid::Tile::Tile;
+    const sf::IntRect* Texture::getTileTextureRect(Tile tile)
+    {
+        switch (tile)
+        {
+        case Tile::Empty:    return nullptr;
+        case Tile::Wall:     return &WALL;
+        case Tile::Goal:     return &GOAL;
+        case Tile::RGoal:    return &RGOAL;
+        case Tile::BorderT:  return &BORDERT;
+        case Tile::BorderB:  return &BORDERB;
+        case Tile::BorderL:  return &BORDERL;
+        case Tile::BorderR:  return &BORDERR;
+        case Tile::BorderTL: return &BORDERTL;
+        case Tile::BorderTR: return &BORDERTR;
+        case Tile::BorderBL: return &BORDERBL;
+        case Tile::BorderBR: return &BORDERBR;
+        default: return nullptr;
         }
     }
 }

@@ -1,4 +1,5 @@
 #include "LevelParser.hpp"
+#include "grid/Grid.hpp"
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -34,21 +35,39 @@ namespace Levels
         }
 
         LevelBuilder builder;
-        builder.setDimensions(width, height);
+        builder.setDimensions(width + 2, height + 2);
 
         bool startExists {};
         bool rStartExists {};
         bool goalExists {};
         bool rGoalExists {};
 
+        for (int y {}; y < height + 2; ++y)
+        {
+            for (int x {}; x < width + 2; ++x)
+            {
+                if (x == 0 && y == 0) builder.setTile(x, y, Grid::Tile::Tile::BorderTL);
+                else if (x == 0 && y == height + 1) builder.setTile(x, y, Grid::Tile::Tile::BorderBL);
+                else if (x == width + 1 && y == 0) builder.setTile(x, y, Grid::Tile::Tile::BorderTR);
+                else if (x == width + 1 && y == height + 1) builder.setTile(x, y, Grid::Tile::Tile::BorderBR);
+                else if (x == 0) builder.setTile(x, y, Grid::Tile::Tile::BorderL);
+                else if (x == width + 1) builder.setTile(x, y, Grid::Tile::Tile::BorderR);
+                else if (y == 0) builder.setTile(x, y, Grid::Tile::Tile::BorderT);
+                else if (y == height + 1) builder.setTile(x, y, Grid::Tile::Tile::BorderB);
+            }
+        }
+
         for (int y {}; y < height; ++y)
         {
             for (int x {}; x < width; ++x)
             {
                 Grid::Tile::Tile tile;
-                char tileChar { lines.at(y).at(x) };
-
-                try { tile = charToTile(tileChar); }
+                char tileChar {};
+                try
+                {
+                    tileChar = lines.at(y).at(x);
+                    tile = charToTile(tileChar);
+                }
                 catch (const std::out_of_range& e)
                 {
                     std::ostringstream err;
@@ -63,7 +82,7 @@ namespace Levels
                 }
 
                 if (tile != Grid::Tile::Tile::Empty)
-                    builder.setTile(x, y, tile);
+                    builder.setTile(x + 1, y + 1, tile);
 
                 if (tileChar == 'P' || tileChar == 'Q' || tileChar == 'S')
                 {
@@ -74,7 +93,7 @@ namespace Levels
                         throw std::runtime_error(err.str());
                     }
                     startExists = true;
-                    builder.setPlayerStart(x, y);
+                    builder.setPlayerStart(x + 1, y + 1);
                 }
 
                 if (tileChar == 'R' || tileChar == 'T' || tileChar == 'U')
@@ -86,7 +105,7 @@ namespace Levels
                         throw std::runtime_error(err.str());
                     }
                     rStartExists = true;
-                    builder.setRPlayerStart(x, y);
+                    builder.setRPlayerStart(x + 1, y + 1);
                 }
 
                 if (tileChar == 'p' || tileChar == 'Q' || tileChar == 'T')
@@ -98,7 +117,7 @@ namespace Levels
                         throw std::runtime_error(err.str());
                     }
                     goalExists = true;
-                    builder.setPlayerGoal(x, y);
+                    builder.setPlayerGoal(x + 1, y + 1);
                 }
 
                 if (tileChar == 'r' || tileChar == 'S' || tileChar == 'U')
@@ -110,7 +129,7 @@ namespace Levels
                         throw std::runtime_error(err.str());
                     }
                     rGoalExists = true;
-                    builder.setRPlayerGoal(x, y);
+                    builder.setRPlayerGoal(x + 1, y + 1);
                 }
             }
         }

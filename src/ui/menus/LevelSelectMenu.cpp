@@ -28,8 +28,8 @@ namespace UI
                 auto& button { m_levelButtons.back() };
 
                 button.setSize(Globals::LevelButtons::SIZE);
-                button.setOutlineColor(Globals::Colors::FG);
-                button.setOutlineThickness(2.f);
+                // button.setOutlineColor(Globals::Colors::FG);
+                // button.setOutlineThickness(2.f);
 
                 if (i > Globals::Game::highestLevel + 1)
                   button.setLocked(true);
